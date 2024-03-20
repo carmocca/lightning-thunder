@@ -1,0 +1,6 @@
+﻿thunder.clang.ceil
+==================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: ceil

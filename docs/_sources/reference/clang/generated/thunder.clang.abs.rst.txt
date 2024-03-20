@@ -1,0 +1,6 @@
+﻿thunder.clang.abs
+=================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: abs

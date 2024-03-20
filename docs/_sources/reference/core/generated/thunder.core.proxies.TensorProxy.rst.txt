@@ -1,0 +1,43 @@
+﻿thunder.core.proxies.TensorProxy
+================================
+
+.. currentmodule:: thunder.core.proxies
+
+.. autoclass:: TensorProxy
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TensorProxy.__init__
+      ~TensorProxy.float
+      ~TensorProxy.replace_name
+      ~TensorProxy.type_string
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TensorProxy.T
+      ~TensorProxy.ddp_type
+      ~TensorProxy.device
+      ~TensorProxy.dtype
+      ~TensorProxy.mT
+      ~TensorProxy.name
+      ~TensorProxy.ndim
+      ~TensorProxy.numel
+      ~TensorProxy.real
+      ~TensorProxy.requires_grad
+      ~TensorProxy.shape
+      ~TensorProxy.size
+      ~TensorProxy.true_dtype
+   
+   

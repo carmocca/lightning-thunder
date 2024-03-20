@@ -1,0 +1,6 @@
+﻿thunder.cache\_misses
+=====================
+
+.. currentmodule:: thunder
+
+.. autofunction:: cache_misses

@@ -1,0 +1,6 @@
+﻿thunder.clang.erfc
+==================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: erfc

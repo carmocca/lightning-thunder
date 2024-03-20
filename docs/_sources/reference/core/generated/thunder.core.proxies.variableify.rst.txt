@@ -1,0 +1,6 @@
+﻿thunder.core.proxies.variableify
+================================
+
+.. currentmodule:: thunder.core.proxies
+
+.. autofunction:: variableify

@@ -1,0 +1,6 @@
+﻿thunder.executors.get\_nvfuser\_executor
+========================================
+
+.. currentmodule:: thunder.executors
+
+.. autofunction:: get_nvfuser_executor

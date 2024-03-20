@@ -1,0 +1,6 @@
+﻿thunder.clang.take\_along\_axis
+===============================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: take_along_axis

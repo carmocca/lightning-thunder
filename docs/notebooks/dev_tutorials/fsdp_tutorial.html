@@ -1,0 +1,1876 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-PQBQ3CV');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="google-site-verification" content="okUst94cAlWSsUsGZTB4xSS4UKTtRV8Nu5XZ9pdd3Aw" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>FSDP Tutorial &mdash; lightning-thunder 0.1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/icon.svg"/>
+  
+  
+  
+    <link rel="canonical" href="https://github.com/Lightning-AI/lightning-thunder/notebooks/dev_tutorials/fsdp_tutorial.html"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/sphinx_paramlinks.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Inside Thunder" href="../../advanced/inside_thunder.html" />
+    <link rel="prev" title="What’s Next" href="../../intermediate/whats_next.html" />
+  <!-- Google Analytics -->
+  
+  <!-- End Google Analytics -->
+  
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/UCity/UCity-Light.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/UCity/UCity-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/UCity/UCity-Semibold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/Inconsolata/Inconsolata.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js" integrity="sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp" crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="../../_static/js/react/react.jsx" type="text/babel"></script>
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://lightning-thunder.rtfd.io/en/latest/" aria-label="PyTorch Lightning">
+      <!--  <img class="call-to-action-img" src="../../_static/images/logo-lightning-icon.png"/> -->
+      </a>
+
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://lightning-thunder.readthedocs.io/en/latest/introduction_guide.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://www.Lightning-AI.ai/blog">Blog</a>
+          </li>
+
+          <li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-orange-arrow">
+                Docs
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning.ai/docs/pytorch/stable/">
+                  <span class="dropdown-title">PyTorch Lightning</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning.ai/docs/fabric/stable/">
+                  <span class="dropdown-title">Lightning Fabric</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://torchmetrics.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">TorchMetrics</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-flash.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Flash</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-bolts.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Bolts</span>
+                </a>
+            </div>
+          </li>
+
+          <!--<li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-arrow">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="">
+                  <span class="dropdown-title">Community</span>
+                  <p>Join the PyTorch developer community to contribute, learn, and get your questions answered.</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://lightning-thunder.readthedocs.io/en/latest/#community-examples">
+                  <span class="dropdown-title">Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <a class="nav-dropdown-item" href="" target="_blank">
+                  <span class="dropdown-title">Forums</span>
+                  <p>A place to discuss PyTorch code, issues, install, research</p>
+                </a>
+                <a class="nav-dropdown-item" href="">
+                  <span class="dropdown-title">Models (Beta)</span>
+                  <p>Discover, publish, and reuse pre-trained models</p>
+                </a>
+              </div>
+            </div>
+          </li>-->
+
+          
+
+          <li>
+            <a href="https://github.com/Lightning-AI/lightning-thunder">GitHub</a>
+          </li>
+
+          <li>
+            <a href="https://www.lightning.ai/">Lightning AI</a>
+          </li>
+
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  0.1.0
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Welcome to ⚡ Lightning Thunder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fundamentals/installation.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fundamentals/hello_world.html">Hello World</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fundamentals/examine.html">Using examine</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../basic/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zero_to_thunder.html">Zero to Thunder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basic/inspecting_traces.html">Thunder step by step</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basic/sharp_edges.html">The sharp edges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basic/mlp_mnist.html">Train a MLP on MNIST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../functional_jit.html">Functional jit</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Intermediate</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intermediate/additional_executors.html">Additional executors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intermediate/ddp.html">Distributed Data Parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intermediate/whats_next.html">What's next</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FSDP Under the Hood Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced/inside_thunder.html">Inside thunder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced/extending.html">Extending thunder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../adding_custom_operator.html">Defining new Thunder operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../adding_custom_operator_backward.html">Defining custom forward and backward for existing operators</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Experimental dev tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="extend.html">Extending Thunder</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/thunder.html">thunder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/common/index.html">thunder.common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/core/index.html">thunder.core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/clang/index.html">thunder.clang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/examine/index.html">thunder.examine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/distributed/index.html">thunder.distributed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/executors/index.html">thunder.executors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/torch/index.html">thunder.torch</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../../index.html">
+          
+            Docs
+          
+        </a> &gt;
+      </li>
+
+        
+      <li>FSDP Tutorial</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/dev_tutorials/fsdp_tutorial.ipynb.txt" rel="nofollow"><img src="../../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <section id="FSDP-Tutorial">
+<h1>FSDP Tutorial<a class="headerlink" href="#FSDP-Tutorial" title="Permalink to this heading">¶</a></h1>
+<p>In this tutorial, we will walk through the implementation of Fully Sharded Data Parallel (FSDP) with Zero2 sharding strategy in <code class="docutils literal notranslate"><span class="pre">thunder</span></code>.</p>
+<section id="Introduction">
+<h2>Introduction<a class="headerlink" href="#Introduction" title="Permalink to this heading">¶</a></h2>
+<p>In recent times, the LLM models have grown so large that all the model parameters don’t fit on a single GPU. To circumvent this problem, there are various strategies like Tensor Parallel, Pipeline Parallel, Fully Sharded Data Parallel, etc to train these large models. In this tutorial, we discuss and implement Zero2 strategy for Fully Sharded Data Parallel (FSDP).</p>
+</section>
+<section id="What-is-Zero2-strategy-for-FSDP?">
+<h2>What is Zero2 strategy for FSDP?<a class="headerlink" href="#What-is-Zero2-strategy-for-FSDP?" title="Permalink to this heading">¶</a></h2>
+<p>In this strategy, we shard the model parameters across all the availabe GPUs. That is each GPU holds onto only a chunk of the parameter. During the forward pass, all GPUs call <code class="docutils literal notranslate"><span class="pre">all_gather</span></code> communication primitive to gather the parameters from other GPUs. Unlike Zero3 strategy which frees the parameter after forward pass, we save these unsharded parameters for backward pass. This is to save the overhead of extra communication. In the backward pass, we utilize the saved parameters and compute
+the gradients. Once the gradients are computed, we use <code class="docutils literal notranslate"><span class="pre">reduce_scatter</span></code> communication primitive to reduce (average) the gradients across all GPUs and scatter those gradients so that a given GPU holds only a chunk of gradient.</p>
+<p>For more information on FSDP, we recommend reading</p>
+<ol class="arabic simple">
+<li><p>PyTorch FSDP: Experiences on Scaling Fully Sharded Data Parallel - <a class="reference external" href="https://arxiv.org/abs/2304.11277">Link</a></p></li>
+<li><p>ZeRO: Memory Optimizations Toward Training Trillion Parameter Models - <a class="reference external" href="https://arxiv.org/abs/1910.02054">Link</a></p></li>
+</ol>
+</section>
+<section id="Example-Model">
+<h2>Example Model<a class="headerlink" href="#Example-Model" title="Permalink to this heading">¶</a></h2>
+<p>For this example we will have a simple model <code class="docutils literal notranslate"><span class="pre">Linear(Tanh(Linear(x)))</span></code> which will be sharded over 2 GPUs</p>
+<p><strong>NOTE</strong>: We are generating the abstract trace so we don’t actually need a system with 2 GPUs for this. It is only required when we execute this trace.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.distributed</span>
+<span class="kn">import</span> <span class="nn">thunder</span>
+<span class="kn">import</span> <span class="nn">thunder.distributed</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Code</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda&#39;</span>
+<span class="n">dim</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="k">def</span> <span class="nf">create_model</span><span class="p">():</span>
+    <span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+              <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">(),</span>
+              <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">layers</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
+<span class="c1"># Input</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+
+
+<span class="c1"># we want to obtain a functional version of our model. The JIT does that internally and we reach into those</span>
+<span class="c1"># internals here</span>
+<span class="n">thunder_model</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">cache_rec</span><span class="p">,</span> <span class="n">i_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">compile_data</span><span class="p">(</span><span class="n">thunder_model</span><span class="p">)</span><span class="o">.</span><span class="n">get_computation_and_inputs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">computation_trace</span> <span class="o">=</span> <span class="n">cache_rec</span><span class="o">.</span><span class="n">computation_traces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">wrap_as_highlighted_code</span><span class="p">(</span><span class="n">trace</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Code</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">trace</span><span class="p">),</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;python&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>We can show the functional version:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wrap_as_highlighted_code</span><span class="p">(</span><span class="n">computation_trace</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.output_html .hll { background-color: #ffffcc }
+.output_html { background: #f8f8f8; }
+.output_html .c { color: #3D7B7B; font-style: italic } /* Comment */
+.output_html .err { border: 1px solid #FF0000 } /* Error */
+.output_html .k { color: #008000; font-weight: bold } /* Keyword */
+.output_html .o { color: #666666 } /* Operator */
+.output_html .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.output_html .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.output_html .cp { color: #9C6500 } /* Comment.Preproc */
+.output_html .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.output_html .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.output_html .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.output_html .gd { color: #A00000 } /* Generic.Deleted */
+.output_html .ge { font-style: italic } /* Generic.Emph */
+.output_html .gr { color: #E40000 } /* Generic.Error */
+.output_html .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.output_html .gi { color: #008400 } /* Generic.Inserted */
+.output_html .go { color: #717171 } /* Generic.Output */
+.output_html .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.output_html .gs { font-weight: bold } /* Generic.Strong */
+.output_html .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.output_html .gt { color: #0044DD } /* Generic.Traceback */
+.output_html .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.output_html .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.output_html .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.output_html .kp { color: #008000 } /* Keyword.Pseudo */
+.output_html .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.output_html .kt { color: #B00040 } /* Keyword.Type */
+.output_html .m { color: #666666 } /* Literal.Number */
+.output_html .s { color: #BA2121 } /* Literal.String */
+.output_html .na { color: #687822 } /* Name.Attribute */
+.output_html .nb { color: #008000 } /* Name.Builtin */
+.output_html .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.output_html .no { color: #880000 } /* Name.Constant */
+.output_html .nd { color: #AA22FF } /* Name.Decorator */
+.output_html .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.output_html .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.output_html .nf { color: #0000FF } /* Name.Function */
+.output_html .nl { color: #767600 } /* Name.Label */
+.output_html .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.output_html .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.output_html .nv { color: #19177C } /* Name.Variable */
+.output_html .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.output_html .w { color: #bbbbbb } /* Text.Whitespace */
+.output_html .mb { color: #666666 } /* Literal.Number.Bin */
+.output_html .mf { color: #666666 } /* Literal.Number.Float */
+.output_html .mh { color: #666666 } /* Literal.Number.Hex */
+.output_html .mi { color: #666666 } /* Literal.Number.Integer */
+.output_html .mo { color: #666666 } /* Literal.Number.Oct */
+.output_html .sa { color: #BA2121 } /* Literal.String.Affix */
+.output_html .sb { color: #BA2121 } /* Literal.String.Backtick */
+.output_html .sc { color: #BA2121 } /* Literal.String.Char */
+.output_html .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.output_html .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.output_html .s2 { color: #BA2121 } /* Literal.String.Double */
+.output_html .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.output_html .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.output_html .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.output_html .sx { color: #008000 } /* Literal.String.Other */
+.output_html .sr { color: #A45A77 } /* Literal.String.Regex */
+.output_html .s1 { color: #BA2121 } /* Literal.String.Single */
+.output_html .ss { color: #19177C } /* Literal.String.Symbol */
+.output_html .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.output_html .fm { color: #0000FF } /* Name.Function.Magic */
+.output_html .vc { color: #19177C } /* Name.Variable.Class */
+.output_html .vg { color: #19177C } /* Name.Variable.Global */
+.output_html .vi { color: #19177C } /* Name.Variable.Instance */
+.output_html .vm { color: #19177C } /* Name.Variable.Magic */
+.output_html .il { color: #666666 } /* Literal.Number.Integer.Long */</style><div class="highlight"><pre><span></span><span class="c1"># Constructed by Dead Code Elimination (took 0 milliseconds)</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span>
+<span class="kn">from</span> <span class="nn">thunder.executors.torchex</span> <span class="kn">import</span> <span class="n">no_autocast</span>
+
+<span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+<span class="nd">@no_autocast</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">augmented_forward_fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+  <span class="c1"># args: &quot;Collection&quot; </span>
+  <span class="n">t0</span><span class="p">,</span> \
+  <span class="n">t1</span><span class="p">,</span> \
+  <span class="n">t2</span><span class="p">,</span> \
+  <span class="o">=</span> <span class="n">args</span>
+  <span class="n">t3</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># t3: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t3 = ltorch.linear(t0, t1, None)  # t3: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t3 = prims.linear(t0, t1, None)  # t3: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="p">[</span><span class="n">t4</span><span class="p">]</span> <span class="o">=</span> <span class="n">nvFusion0</span><span class="p">(</span><span class="n">t3</span><span class="p">)</span>
+    <span class="c1"># t4 = prims.tanh(t3)  # t4: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t5</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">t4</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># t5: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t5 = ltorch.linear(t4, t2, None)  # t5: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t5 = prims.linear(t4, t2, None)  # t5: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="n">t5</span><span class="p">,</span> <span class="s1">&#39;flat_args&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">t0</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">],</span> <span class="s1">&#39;flat_output&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">t5</span><span class="p">,)},</span> <span class="p">((</span><span class="n">t0</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t4</span><span class="p">),</span> <span class="p">())</span>
+</pre></div></div>
+</div>
+</section>
+<section id="Step-1-:-Configuration">
+<h2>Step 1 : Configuration<a class="headerlink" href="#Step-1-:-Configuration" title="Permalink to this heading">¶</a></h2>
+<p>For our implementation of FSDP, we will generate the trace where we are sharding our model over 2 GPU</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># FSDP Config</span>
+<span class="c1"># Usually these values are set in the environment by `torchrun` but for this example</span>
+<span class="c1"># we will set them ourselves</span>
+<span class="n">world_size</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># We have two processes.</span>
+<span class="n">global_rank</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Current process is the very first process.</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Step-2:-Function-to-shard-parameters">
+<h2>Step 2: Function to shard parameters<a class="headerlink" href="#Step-2:-Function-to-shard-parameters" title="Permalink to this heading">¶</a></h2>
+<p>Next step is to write a function which will actually shard the parameters over 0-dim.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># NOTE: We shard over 0th dimension of the param.</span>
+<span class="k">def</span> <span class="nf">shard_param</span><span class="p">(</span><span class="n">param</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">rank</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">world_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># We will keep it simple and error if param&#39;s 0th dim is not divisible by ``world_size``.</span>
+    <span class="c1"># Alternative is that we can pad our parameters so that they are divisible by `world_size`.</span>
+    <span class="k">assert</span> <span class="n">param</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">%</span> <span class="n">world_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,(</span>
+        <span class="sa">f</span><span class="s2">&quot;Current sharding requires the first dimension of the parameter </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> (</span><span class="si">{</span><span class="n">param</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot; to be divisible by the world size (</span><span class="si">{</span><span class="n">world_size</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="p">)</span>
+    <span class="n">chunk_size</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="n">world_size</span>
+
+    <span class="c1"># rank helps us determine which chunk of the parameter we will hold.</span>
+    <span class="n">shard</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">narrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">chunk_size</span> <span class="o">*</span> <span class="n">rank</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+    <span class="n">param</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">shard</span>
+
+<span class="c1"># Shard each parameter of the model</span>
+<span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">named_parameters</span><span class="p">():</span>
+    <span class="n">shard_param</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">global_rank</span><span class="p">,</span> <span class="n">world_size</span><span class="p">,</span> <span class="n">param_name</span><span class="p">)</span>
+    <span class="c1"># Mark the param to denote that it is sharded.</span>
+    <span class="c1"># This is required by the synchronization primitive we will use below.</span>
+    <span class="n">param</span><span class="o">.</span><span class="n">ddp_type</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">proxies</span><span class="o">.</span><span class="n">DDPType</span><span class="o">.</span><span class="n">FULLY_SHARDED</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verify our model looks as expected</span>
+<span class="n">model</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Sequential(
+  (0): Linear(in_features=64, out_features=64, bias=False)
+  (1): Tanh()
+  (2): Linear(in_features=64, out_features=64, bias=False)
+)
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let us verify that we have actually sharded the parameters.</span>
+<span class="c1"># Checking if the weight of 1st Linear layer is sharded over 0th dim.</span>
+<span class="k">assert</span> <span class="n">model</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">dim</span> <span class="o">/</span> <span class="n">world_size</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Step-3:-Add-an-operation-to-synchronize-the-parameters-before-calling-the-model.forward.">
+<h2>Step 3: Add an operation to synchronize the parameters before calling the model.forward.<a class="headerlink" href="#Step-3:-Add-an-operation-to-synchronize-the-parameters-before-calling-the-model.forward." title="Permalink to this heading">¶</a></h2>
+<p>We have to create a process group. This is needed because the synchronization primitive <code class="docutils literal notranslate"><span class="pre">synchronize</span></code> that we will use to gather and scatter our weights in forward and backward requires a process group.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a process group</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">distributed_c10d</span><span class="o">.</span><span class="n">ProcessGroup</span><span class="o">.</span><span class="n">Options</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="s2">&quot;nccl&quot;</span><span class="p">)</span>
+<span class="n">process_group</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">distributed_c10d</span><span class="o">.</span><span class="n">ProcessGroup</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">distributed_c10d</span><span class="o">.</span><span class="n">Store</span><span class="p">(),</span>
+                                                     <span class="n">global_rank</span><span class="p">,</span> <span class="n">world_size</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">distributed_c10d</span><span class="o">.</span><span class="n">GroupMember</span><span class="o">.</span><span class="n">WORLD</span> <span class="o">=</span> <span class="n">process_group</span>
+</pre></div>
+</div>
+</div>
+<p>Because we are trying to play tricks with the traces and skip the part that inserts the synchronization automatically but also does the translation from PyTorch to thunder, we need to drop one layer of the trace to apply this manually. (This is really hacky, don’t try it at home!)</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### DON&#39;T TRY THIS AT HOME</span>
+<span class="n">computation_trace</span><span class="o">.</span><span class="n">bound_symbols</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">sym</span> <span class="o">=</span> <span class="n">cache_rec</span><span class="o">.</span><span class="n">computation_traces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bound_symbols</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">subsymbols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sym</span>
+<span class="k">if</span> <span class="n">cache_rec</span><span class="o">.</span><span class="n">computation_traces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bound_symbols</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">subsymbols</span><span class="p">:</span>
+    <span class="n">computation_trace</span><span class="o">.</span><span class="n">bound_symbols</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">cache_rec</span><span class="o">.</span><span class="n">computation_traces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bound_symbols</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">subsymbols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">computation_trace</span><span class="o">.</span><span class="n">bound_symbols</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">sym</span> <span class="o">=</span> <span class="n">cache_rec</span><span class="o">.</span><span class="n">computation_traces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bound_symbols</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">subsymbols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sym</span>
+
+<span class="n">wrap_as_highlighted_code</span><span class="p">(</span><span class="n">computation_trace</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.output_html .hll { background-color: #ffffcc }
+.output_html { background: #f8f8f8; }
+.output_html .c { color: #3D7B7B; font-style: italic } /* Comment */
+.output_html .err { border: 1px solid #FF0000 } /* Error */
+.output_html .k { color: #008000; font-weight: bold } /* Keyword */
+.output_html .o { color: #666666 } /* Operator */
+.output_html .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.output_html .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.output_html .cp { color: #9C6500 } /* Comment.Preproc */
+.output_html .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.output_html .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.output_html .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.output_html .gd { color: #A00000 } /* Generic.Deleted */
+.output_html .ge { font-style: italic } /* Generic.Emph */
+.output_html .gr { color: #E40000 } /* Generic.Error */
+.output_html .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.output_html .gi { color: #008400 } /* Generic.Inserted */
+.output_html .go { color: #717171 } /* Generic.Output */
+.output_html .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.output_html .gs { font-weight: bold } /* Generic.Strong */
+.output_html .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.output_html .gt { color: #0044DD } /* Generic.Traceback */
+.output_html .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.output_html .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.output_html .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.output_html .kp { color: #008000 } /* Keyword.Pseudo */
+.output_html .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.output_html .kt { color: #B00040 } /* Keyword.Type */
+.output_html .m { color: #666666 } /* Literal.Number */
+.output_html .s { color: #BA2121 } /* Literal.String */
+.output_html .na { color: #687822 } /* Name.Attribute */
+.output_html .nb { color: #008000 } /* Name.Builtin */
+.output_html .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.output_html .no { color: #880000 } /* Name.Constant */
+.output_html .nd { color: #AA22FF } /* Name.Decorator */
+.output_html .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.output_html .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.output_html .nf { color: #0000FF } /* Name.Function */
+.output_html .nl { color: #767600 } /* Name.Label */
+.output_html .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.output_html .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.output_html .nv { color: #19177C } /* Name.Variable */
+.output_html .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.output_html .w { color: #bbbbbb } /* Text.Whitespace */
+.output_html .mb { color: #666666 } /* Literal.Number.Bin */
+.output_html .mf { color: #666666 } /* Literal.Number.Float */
+.output_html .mh { color: #666666 } /* Literal.Number.Hex */
+.output_html .mi { color: #666666 } /* Literal.Number.Integer */
+.output_html .mo { color: #666666 } /* Literal.Number.Oct */
+.output_html .sa { color: #BA2121 } /* Literal.String.Affix */
+.output_html .sb { color: #BA2121 } /* Literal.String.Backtick */
+.output_html .sc { color: #BA2121 } /* Literal.String.Char */
+.output_html .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.output_html .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.output_html .s2 { color: #BA2121 } /* Literal.String.Double */
+.output_html .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.output_html .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.output_html .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.output_html .sx { color: #008000 } /* Literal.String.Other */
+.output_html .sr { color: #A45A77 } /* Literal.String.Regex */
+.output_html .s1 { color: #BA2121 } /* Literal.String.Single */
+.output_html .ss { color: #19177C } /* Literal.String.Symbol */
+.output_html .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.output_html .fm { color: #0000FF } /* Name.Function.Magic */
+.output_html .vc { color: #19177C } /* Name.Variable.Class */
+.output_html .vg { color: #19177C } /* Name.Variable.Global */
+.output_html .vi { color: #19177C } /* Name.Variable.Instance */
+.output_html .vm { color: #19177C } /* Name.Variable.Magic */
+.output_html .il { color: #666666 } /* Literal.Number.Integer.Long */</style><div class="highlight"><pre><span></span><span class="c1"># Constructed by Dead Code Elimination (took 0 milliseconds)</span>
+<span class="kn">import</span> <span class="nn">thunder</span>
+<span class="kn">import</span> <span class="nn">thunder.core.prims</span> <span class="k">as</span> <span class="nn">prims</span>
+<span class="kn">import</span> <span class="nn">thunder.torch</span> <span class="k">as</span> <span class="nn">ltorch</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span>
+<span class="kn">from</span> <span class="nn">thunder.executors.torchex</span> <span class="kn">import</span> <span class="n">no_autocast</span>
+
+<span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+<span class="nd">@no_autocast</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">augmented_forward_fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+  <span class="c1"># args: &quot;Collection&quot; </span>
+  <span class="n">t0</span><span class="p">,</span> \
+  <span class="n">t1</span><span class="p">,</span> \
+  <span class="n">t2</span><span class="p">,</span> \
+  <span class="o">=</span> <span class="n">args</span>
+  <span class="n">t3</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># t3: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t3 = ltorch.linear(t0, t1, None)  # t3: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t3 = prims.linear(t0, t1, None)  # t3: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t4</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">t3</span><span class="p">)</span>  <span class="c1"># t4: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t5</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">t4</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># t5: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t5 = ltorch.linear(t4, t2, None)  # t5: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t5 = prims.linear(t4, t2, None)  # t5: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="n">t5</span><span class="p">,</span> <span class="s1">&#39;flat_args&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">t0</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">],</span> <span class="s1">&#39;flat_output&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">t5</span><span class="p">,)},</span> <span class="p">((</span><span class="n">t0</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t4</span><span class="p">),</span> <span class="p">())</span>
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># now we have a  functional version of the model which</span>
+<span class="c1"># takes as inputs the expected arguments and all the parameters.</span>
+<span class="n">functional_forward</span> <span class="o">=</span> <span class="n">computation_trace</span><span class="o">.</span><span class="n">python_callable</span><span class="p">()</span>
+
+<span class="c1"># This function creates a model with synchronization</span>
+<span class="c1"># before calling the forward pass.</span>
+<span class="k">def</span> <span class="nf">model_with_syncs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">params</span><span class="p">):</span>
+    <span class="c1"># We call `prims.synchronize` on all the parameters.</span>
+    <span class="c1"># This is essentially calling `all_gather` so that we have the complete</span>
+    <span class="c1"># parameter before we actually to the forward computation.</span>
+    <span class="n">unsharded_params</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+        <span class="n">unsharded_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thunder</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">prims</span><span class="o">.</span><span class="n">synchronize</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">process_group</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">functional_forward</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">unsharded_params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Let us now see what the trace of our model looks like with all the synchronization.</p>
+<p>Two main observations regarding the below trace 1. We can observe the <code class="docutils literal notranslate"><span class="pre">prims.synchronize</span></code> that we inserted using <code class="docutils literal notranslate"><span class="pre">model_with_syncs</span></code>. 2. Output of the <code class="docutils literal notranslate"><span class="pre">prims.synchronize</span></code> have the shape of unsharded (original) parameter.</p>
+<p>With this, we have implemented the FSDP for the forward pass of our model.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trace</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">trace</span><span class="p">()(</span><span class="n">model_with_syncs</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+
+<span class="n">wrap_as_highlighted_code</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.output_html .hll { background-color: #ffffcc }
+.output_html { background: #f8f8f8; }
+.output_html .c { color: #3D7B7B; font-style: italic } /* Comment */
+.output_html .err { border: 1px solid #FF0000 } /* Error */
+.output_html .k { color: #008000; font-weight: bold } /* Keyword */
+.output_html .o { color: #666666 } /* Operator */
+.output_html .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.output_html .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.output_html .cp { color: #9C6500 } /* Comment.Preproc */
+.output_html .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.output_html .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.output_html .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.output_html .gd { color: #A00000 } /* Generic.Deleted */
+.output_html .ge { font-style: italic } /* Generic.Emph */
+.output_html .gr { color: #E40000 } /* Generic.Error */
+.output_html .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.output_html .gi { color: #008400 } /* Generic.Inserted */
+.output_html .go { color: #717171 } /* Generic.Output */
+.output_html .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.output_html .gs { font-weight: bold } /* Generic.Strong */
+.output_html .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.output_html .gt { color: #0044DD } /* Generic.Traceback */
+.output_html .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.output_html .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.output_html .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.output_html .kp { color: #008000 } /* Keyword.Pseudo */
+.output_html .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.output_html .kt { color: #B00040 } /* Keyword.Type */
+.output_html .m { color: #666666 } /* Literal.Number */
+.output_html .s { color: #BA2121 } /* Literal.String */
+.output_html .na { color: #687822 } /* Name.Attribute */
+.output_html .nb { color: #008000 } /* Name.Builtin */
+.output_html .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.output_html .no { color: #880000 } /* Name.Constant */
+.output_html .nd { color: #AA22FF } /* Name.Decorator */
+.output_html .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.output_html .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.output_html .nf { color: #0000FF } /* Name.Function */
+.output_html .nl { color: #767600 } /* Name.Label */
+.output_html .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.output_html .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.output_html .nv { color: #19177C } /* Name.Variable */
+.output_html .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.output_html .w { color: #bbbbbb } /* Text.Whitespace */
+.output_html .mb { color: #666666 } /* Literal.Number.Bin */
+.output_html .mf { color: #666666 } /* Literal.Number.Float */
+.output_html .mh { color: #666666 } /* Literal.Number.Hex */
+.output_html .mi { color: #666666 } /* Literal.Number.Integer */
+.output_html .mo { color: #666666 } /* Literal.Number.Oct */
+.output_html .sa { color: #BA2121 } /* Literal.String.Affix */
+.output_html .sb { color: #BA2121 } /* Literal.String.Backtick */
+.output_html .sc { color: #BA2121 } /* Literal.String.Char */
+.output_html .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.output_html .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.output_html .s2 { color: #BA2121 } /* Literal.String.Double */
+.output_html .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.output_html .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.output_html .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.output_html .sx { color: #008000 } /* Literal.String.Other */
+.output_html .sr { color: #A45A77 } /* Literal.String.Regex */
+.output_html .s1 { color: #BA2121 } /* Literal.String.Single */
+.output_html .ss { color: #19177C } /* Literal.String.Symbol */
+.output_html .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.output_html .fm { color: #0000FF } /* Name.Function.Magic */
+.output_html .vc { color: #19177C } /* Name.Variable.Class */
+.output_html .vg { color: #19177C } /* Name.Variable.Global */
+.output_html .vi { color: #19177C } /* Name.Variable.Instance */
+.output_html .vm { color: #19177C } /* Name.Variable.Magic */
+.output_html .il { color: #666666 } /* Literal.Number.Integer.Long */</style><div class="highlight"><pre><span></span><span class="c1"># Constructed by Dead Code Elimination (took 0 milliseconds)</span>
+<span class="kn">import</span> <span class="nn">thunder</span>
+<span class="kn">import</span> <span class="nn">thunder.core.prims</span> <span class="k">as</span> <span class="nn">prims</span>
+<span class="kn">import</span> <span class="nn">thunder.distributed.prims</span>
+<span class="kn">import</span> <span class="nn">thunder.torch</span> <span class="k">as</span> <span class="nn">ltorch</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">thunder.executors.torchex</span> <span class="kn">import</span> <span class="n">no_autocast</span>
+
+<span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+<span class="nd">@no_autocast</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">model_with_syncs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">params</span><span class="p">):</span>
+  <span class="c1"># x: &quot;cuda:0 f32[64, 64]&quot; </span>
+  <span class="c1"># params: &quot;Collection&quot; </span>
+  <span class="n">t0</span><span class="p">,</span> \
+  <span class="n">t1</span><span class="p">,</span> \
+  <span class="o">=</span> <span class="n">params</span>
+  <span class="n">t2</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">prims</span><span class="o">.</span><span class="n">synchronize</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">_torch_distributed_distributed_c10d_ProcessGroup_0</span><span class="p">)</span>  <span class="c1"># t2: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t3</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">prims</span><span class="o">.</span><span class="n">synchronize</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">_torch_distributed_distributed_c10d_ProcessGroup_0</span><span class="p">)</span>  <span class="c1"># t3: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t4</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># t4: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t4 = prims.linear(x, t2, None)  # t4: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t5</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">t4</span><span class="p">)</span>  <span class="c1"># t5: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t6</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">t5</span><span class="p">,</span> <span class="n">t3</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># t6: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t6 = prims.linear(t5, t3, None)  # t6: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">return</span> <span class="p">({</span><span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="n">t6</span><span class="p">,</span> <span class="s1">&#39;flat_args&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">],</span> <span class="s1">&#39;flat_output&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">t6</span><span class="p">,)},</span> <span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">t3</span><span class="p">,</span> <span class="n">t5</span><span class="p">),</span> <span class="p">()))</span>
+</pre></div></div>
+</div>
+<p>For backward, we don’t have to do anything because <code class="docutils literal notranslate"><span class="pre">thunder</span></code> already knows how to compute the backward of <code class="docutils literal notranslate"><span class="pre">prims.synchronize</span></code>. We can verify that by using the <code class="docutils literal notranslate"><span class="pre">value_and_grad</span></code> transform to generate the complete forward and backward trace together.</p>
+<p>Observations for the trace below: 1. <code class="docutils literal notranslate"><span class="pre">prims.synchronize</span></code> from previous trace is now decomposed into <code class="docutils literal notranslate"><span class="pre">prims.all_gather</span></code> and <code class="docutils literal notranslate"><span class="pre">prims.wait</span></code>. So, we can clearly see that we make a communication call to gather the parameter (which is asynchronous) and wait till we have the complete parameter. 2. At the end of the trace (after the forward and the backward computation), we see calls to <code class="docutils literal notranslate"><span class="pre">prims.reduce_scatter</span></code> and <code class="docutils literal notranslate"><span class="pre">prims.wait</span></code>. This takes care of reducing the gradients across all the GPUs and
+sharding them. One thing to note, for averaging gradients with low dynamic range dtype like <code class="docutils literal notranslate"><span class="pre">float16</span></code>, if we naively sum the gradients across GPUs before dividing by <code class="docutils literal notranslate"><span class="pre">world_size</span></code>, it can lead to overflows. So we scale the gradient tensor with <code class="docutils literal notranslate"><span class="pre">world_size</span></code>, before calling <code class="docutils literal notranslate"><span class="pre">reduce_scatter</span></code> with <code class="docutils literal notranslate"><span class="pre">sum</span></code> reduction to effectively average the gradients without overflow.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">thunder.core.transforms</span> <span class="kn">import</span> <span class="n">value_and_grad</span>
+
+<span class="n">forward_and_backward_model</span> <span class="o">=</span> <span class="n">value_and_grad</span><span class="p">(</span><span class="n">model_with_syncs</span><span class="p">)</span>
+
+<span class="n">forward_backward_trace</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">trace</span><span class="p">()(</span><span class="n">forward_and_backward_model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+
+<span class="n">wrap_as_highlighted_code</span><span class="p">(</span><span class="n">forward_backward_trace</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.output_html .hll { background-color: #ffffcc }
+.output_html { background: #f8f8f8; }
+.output_html .c { color: #3D7B7B; font-style: italic } /* Comment */
+.output_html .err { border: 1px solid #FF0000 } /* Error */
+.output_html .k { color: #008000; font-weight: bold } /* Keyword */
+.output_html .o { color: #666666 } /* Operator */
+.output_html .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.output_html .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.output_html .cp { color: #9C6500 } /* Comment.Preproc */
+.output_html .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.output_html .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.output_html .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.output_html .gd { color: #A00000 } /* Generic.Deleted */
+.output_html .ge { font-style: italic } /* Generic.Emph */
+.output_html .gr { color: #E40000 } /* Generic.Error */
+.output_html .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.output_html .gi { color: #008400 } /* Generic.Inserted */
+.output_html .go { color: #717171 } /* Generic.Output */
+.output_html .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.output_html .gs { font-weight: bold } /* Generic.Strong */
+.output_html .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.output_html .gt { color: #0044DD } /* Generic.Traceback */
+.output_html .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.output_html .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.output_html .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.output_html .kp { color: #008000 } /* Keyword.Pseudo */
+.output_html .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.output_html .kt { color: #B00040 } /* Keyword.Type */
+.output_html .m { color: #666666 } /* Literal.Number */
+.output_html .s { color: #BA2121 } /* Literal.String */
+.output_html .na { color: #687822 } /* Name.Attribute */
+.output_html .nb { color: #008000 } /* Name.Builtin */
+.output_html .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.output_html .no { color: #880000 } /* Name.Constant */
+.output_html .nd { color: #AA22FF } /* Name.Decorator */
+.output_html .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.output_html .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.output_html .nf { color: #0000FF } /* Name.Function */
+.output_html .nl { color: #767600 } /* Name.Label */
+.output_html .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.output_html .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.output_html .nv { color: #19177C } /* Name.Variable */
+.output_html .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.output_html .w { color: #bbbbbb } /* Text.Whitespace */
+.output_html .mb { color: #666666 } /* Literal.Number.Bin */
+.output_html .mf { color: #666666 } /* Literal.Number.Float */
+.output_html .mh { color: #666666 } /* Literal.Number.Hex */
+.output_html .mi { color: #666666 } /* Literal.Number.Integer */
+.output_html .mo { color: #666666 } /* Literal.Number.Oct */
+.output_html .sa { color: #BA2121 } /* Literal.String.Affix */
+.output_html .sb { color: #BA2121 } /* Literal.String.Backtick */
+.output_html .sc { color: #BA2121 } /* Literal.String.Char */
+.output_html .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.output_html .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.output_html .s2 { color: #BA2121 } /* Literal.String.Double */
+.output_html .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.output_html .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.output_html .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.output_html .sx { color: #008000 } /* Literal.String.Other */
+.output_html .sr { color: #A45A77 } /* Literal.String.Regex */
+.output_html .s1 { color: #BA2121 } /* Literal.String.Single */
+.output_html .ss { color: #19177C } /* Literal.String.Symbol */
+.output_html .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.output_html .fm { color: #0000FF } /* Name.Function.Magic */
+.output_html .vc { color: #19177C } /* Name.Variable.Class */
+.output_html .vg { color: #19177C } /* Name.Variable.Global */
+.output_html .vi { color: #19177C } /* Name.Variable.Instance */
+.output_html .vm { color: #19177C } /* Name.Variable.Magic */
+.output_html .il { color: #666666 } /* Literal.Number.Integer.Long */</style><div class="highlight"><pre><span></span><span class="c1"># Constructed by Dead Code Elimination (took 1 milliseconds)</span>
+<span class="kn">import</span> <span class="nn">thunder</span>
+<span class="kn">import</span> <span class="nn">thunder.core.devices</span> <span class="k">as</span> <span class="nn">devices</span>
+<span class="kn">import</span> <span class="nn">thunder.core.dtypes</span> <span class="k">as</span> <span class="nn">dtypes</span>
+<span class="kn">import</span> <span class="nn">thunder.core.prims</span> <span class="k">as</span> <span class="nn">prims</span>
+<span class="kn">import</span> <span class="nn">thunder.distributed.prims</span>
+<span class="kn">import</span> <span class="nn">thunder.torch</span> <span class="k">as</span> <span class="nn">ltorch</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">thunder.executors.torchex</span> <span class="kn">import</span> <span class="n">no_autocast</span>
+
+<span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+<span class="nd">@no_autocast</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">_value_and_grad</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+  <span class="c1"># args: &quot;Collection&quot; </span>
+  <span class="n">t0</span><span class="p">,</span> \
+  <span class="n">t1</span><span class="p">,</span> \
+  <span class="n">t2</span><span class="p">,</span> \
+  <span class="o">=</span> <span class="n">args</span>
+  <span class="n">t3</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">devices</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtypes</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># t3: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t4</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">devices</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtypes</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># t4: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t5</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">devices</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtypes</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># t5: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t6</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">devices</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtypes</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># t6: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t7</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">devices</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtypes</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># t7: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t8</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">devices</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtypes</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># t8: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t9</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">devices</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtypes</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># t9: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t10</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">devices</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtypes</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># t10: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">p11</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">prims</span><span class="o">.</span><span class="n">all_gather</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">_torch_distributed_distributed_c10d_ProcessGroup_0</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># p11: &quot;FUTURE cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t12</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">prims</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">p11</span><span class="p">)</span>  <span class="c1"># t12: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">p13</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">prims</span><span class="o">.</span><span class="n">all_gather</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span> <span class="n">_torch_distributed_distributed_c10d_ProcessGroup_0</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># p13: &quot;FUTURE cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t14</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">prims</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">p13</span><span class="p">)</span>  <span class="c1"># t14: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t15</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">t12</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># t15: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t16</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">t15</span><span class="p">)</span>  <span class="c1"># t16: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t17</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">t16</span><span class="p">,</span> <span class="n">t14</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># t17: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t18</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t6</span><span class="p">,</span> <span class="n">t7</span><span class="p">)</span>  <span class="c1"># t18: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t19</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t3</span><span class="p">,</span> <span class="n">t8</span><span class="p">)</span>  <span class="c1"># t19: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t20</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t5</span><span class="p">,</span> <span class="n">t9</span><span class="p">)</span>  <span class="c1"># t20: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t21</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">t18</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>  <span class="c1"># t21: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t21 = prims.reshape(t18, (64, 64))  # t21: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t22</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">t21</span><span class="p">,</span> <span class="n">t14</span><span class="p">)</span>  <span class="c1"># t22: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t22 = prims.matmul(t21, t14)  # t22: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t23</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">t18</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>  <span class="c1"># t23: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t23 = prims.reshape(t18, (64, 64))  # t23: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t24</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">t23</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># t24: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t25</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">t16</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>  <span class="c1"># t25: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t25 = prims.reshape(t16, (64, 64))  # t25: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t26</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">t24</span><span class="p">,</span> <span class="n">t25</span><span class="p">)</span>  <span class="c1"># t26: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t26 = prims.matmul(t24, t25)  # t26: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t27</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t10</span><span class="p">,</span> <span class="n">t22</span><span class="p">)</span>  <span class="c1"># t27: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t28</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t20</span><span class="p">,</span> <span class="n">t26</span><span class="p">)</span>  <span class="c1"># t28: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t29</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">t16</span><span class="p">,</span> <span class="n">t16</span><span class="p">)</span>  <span class="c1"># t29: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t29 = prims.mul(t16, t16)  # t29: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t30</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">t29</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># t30: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># _ = prims.convert_element_type(1, float)</span>
+    <span class="c1"># t30 = prims.sub(1.0, t29)  # t30: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t31</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">t27</span><span class="p">,</span> <span class="n">t30</span><span class="p">)</span>  <span class="c1"># t31: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t31 = prims.mul(t27, t30)  # t31: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t32</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">t31</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>  <span class="c1"># t32: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t32 = prims.reshape(t31, (64, 64))  # t32: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t33</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">t32</span><span class="p">,</span> <span class="n">t12</span><span class="p">)</span>  <span class="c1"># t33: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t33 = prims.matmul(t32, t12)  # t33: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t34</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">t31</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>  <span class="c1"># t34: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t34 = prims.reshape(t31, (64, 64))  # t34: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t35</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">t34</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># t35: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t36</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>  <span class="c1"># t36: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t36 = prims.reshape(t0, (64, 64))  # t36: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t37</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">t35</span><span class="p">,</span> <span class="n">t36</span><span class="p">)</span>  <span class="c1"># t37: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t37 = prims.matmul(t35, t36)  # t37: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t38</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t19</span><span class="p">,</span> <span class="n">t33</span><span class="p">)</span>  <span class="c1"># t38: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t39</span> <span class="o">=</span> <span class="n">prims</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t4</span><span class="p">,</span> <span class="n">t37</span><span class="p">)</span>  <span class="c1"># t39: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t40</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">true_divide</span><span class="p">(</span><span class="n">t28</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># t40: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># _ = prims.convert_element_type(2, float)</span>
+    <span class="c1"># t40 = prims.div(t28, 2.0)  # t40: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">p41</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">prims</span><span class="o">.</span><span class="n">reduce_scatter</span><span class="p">(</span><span class="n">t40</span><span class="p">,</span> <span class="n">_DistributedReduceOps_1</span><span class="p">,</span> <span class="n">_torch_distributed_distributed_c10d_ProcessGroup_0</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># p41: &quot;FUTURE cuda:0 f32[32, 64]&quot;</span>
+  <span class="n">t42</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">prims</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">p41</span><span class="p">)</span>  <span class="c1"># t42: &quot;cuda:0 f32[32, 64]&quot;</span>
+  <span class="n">t43</span> <span class="o">=</span> <span class="n">ltorch</span><span class="o">.</span><span class="n">true_divide</span><span class="p">(</span><span class="n">t39</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># t43: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># _ = prims.convert_element_type(2, float)</span>
+    <span class="c1"># t43 = prims.div(t39, 2.0)  # t43: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">p44</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">prims</span><span class="o">.</span><span class="n">reduce_scatter</span><span class="p">(</span><span class="n">t43</span><span class="p">,</span> <span class="n">_DistributedReduceOps_1</span><span class="p">,</span> <span class="n">_torch_distributed_distributed_c10d_ProcessGroup_0</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># p44: &quot;FUTURE cuda:0 f32[32, 64]&quot;</span>
+  <span class="n">t45</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">prims</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">p44</span><span class="p">)</span>  <span class="c1"># t45: &quot;cuda:0 f32[32, 64]&quot;</span>
+  <span class="k">return</span> <span class="p">(({</span><span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="n">t17</span><span class="p">,</span> <span class="s1">&#39;flat_args&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">t0</span><span class="p">,</span> <span class="n">t12</span><span class="p">,</span> <span class="n">t14</span><span class="p">],</span> <span class="s1">&#39;flat_output&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">t17</span><span class="p">,)},</span> <span class="p">((</span><span class="n">t0</span><span class="p">,</span> <span class="n">t14</span><span class="p">,</span> <span class="n">t16</span><span class="p">),</span> <span class="p">())),</span> <span class="p">(</span><span class="n">t38</span><span class="p">,</span> <span class="n">t45</span><span class="p">,</span> <span class="n">t42</span><span class="p">))</span>
+</pre></div></div>
+</div>
+<p>The above trace, only contains primitive which specifies the semantic of an operation abstractly but doesn’t perform the actual computation.</p>
+<p>Now we will generate the execution trace which can actually perform the compute.</p>
+<p>In the execution trace generated below, we can see that all the primitives have been replaced with actually PyTorch operations. Also, our synchronization primitives have been replaced with PyTorch implementation provided by thunder i.e. <code class="docutils literal notranslate"><span class="pre">torch_all_gather_prim_impl</span></code>, <code class="docutils literal notranslate"><span class="pre">torch_reduce_scatter_prim_impl</span></code>, <code class="docutils literal notranslate"><span class="pre">torch_wait_prim_impl</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimized_trace</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">transform_for_execution</span><span class="p">(</span><span class="n">forward_backward_trace</span><span class="p">,</span> <span class="n">executors_list</span><span class="o">=</span><span class="n">thunder</span><span class="o">.</span><span class="n">get_always_executors</span><span class="p">())</span>
+
+<span class="c1"># Grab the final trace</span>
+<span class="n">exec_trace</span> <span class="o">=</span> <span class="n">optimized_trace</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">wrap_as_highlighted_code</span><span class="p">(</span><span class="n">exec_trace</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.output_html .hll { background-color: #ffffcc }
+.output_html { background: #f8f8f8; }
+.output_html .c { color: #3D7B7B; font-style: italic } /* Comment */
+.output_html .err { border: 1px solid #FF0000 } /* Error */
+.output_html .k { color: #008000; font-weight: bold } /* Keyword */
+.output_html .o { color: #666666 } /* Operator */
+.output_html .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.output_html .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.output_html .cp { color: #9C6500 } /* Comment.Preproc */
+.output_html .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.output_html .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.output_html .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.output_html .gd { color: #A00000 } /* Generic.Deleted */
+.output_html .ge { font-style: italic } /* Generic.Emph */
+.output_html .gr { color: #E40000 } /* Generic.Error */
+.output_html .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.output_html .gi { color: #008400 } /* Generic.Inserted */
+.output_html .go { color: #717171 } /* Generic.Output */
+.output_html .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.output_html .gs { font-weight: bold } /* Generic.Strong */
+.output_html .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.output_html .gt { color: #0044DD } /* Generic.Traceback */
+.output_html .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.output_html .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.output_html .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.output_html .kp { color: #008000 } /* Keyword.Pseudo */
+.output_html .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.output_html .kt { color: #B00040 } /* Keyword.Type */
+.output_html .m { color: #666666 } /* Literal.Number */
+.output_html .s { color: #BA2121 } /* Literal.String */
+.output_html .na { color: #687822 } /* Name.Attribute */
+.output_html .nb { color: #008000 } /* Name.Builtin */
+.output_html .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.output_html .no { color: #880000 } /* Name.Constant */
+.output_html .nd { color: #AA22FF } /* Name.Decorator */
+.output_html .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.output_html .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.output_html .nf { color: #0000FF } /* Name.Function */
+.output_html .nl { color: #767600 } /* Name.Label */
+.output_html .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.output_html .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.output_html .nv { color: #19177C } /* Name.Variable */
+.output_html .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.output_html .w { color: #bbbbbb } /* Text.Whitespace */
+.output_html .mb { color: #666666 } /* Literal.Number.Bin */
+.output_html .mf { color: #666666 } /* Literal.Number.Float */
+.output_html .mh { color: #666666 } /* Literal.Number.Hex */
+.output_html .mi { color: #666666 } /* Literal.Number.Integer */
+.output_html .mo { color: #666666 } /* Literal.Number.Oct */
+.output_html .sa { color: #BA2121 } /* Literal.String.Affix */
+.output_html .sb { color: #BA2121 } /* Literal.String.Backtick */
+.output_html .sc { color: #BA2121 } /* Literal.String.Char */
+.output_html .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.output_html .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.output_html .s2 { color: #BA2121 } /* Literal.String.Double */
+.output_html .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.output_html .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.output_html .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.output_html .sx { color: #008000 } /* Literal.String.Other */
+.output_html .sr { color: #A45A77 } /* Literal.String.Regex */
+.output_html .s1 { color: #BA2121 } /* Literal.String.Single */
+.output_html .ss { color: #19177C } /* Literal.String.Symbol */
+.output_html .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.output_html .fm { color: #0000FF } /* Name.Function.Magic */
+.output_html .vc { color: #19177C } /* Name.Variable.Class */
+.output_html .vg { color: #19177C } /* Name.Variable.Global */
+.output_html .vi { color: #19177C } /* Name.Variable.Instance */
+.output_html .vm { color: #19177C } /* Name.Variable.Magic */
+.output_html .il { color: #666666 } /* Literal.Number.Integer.Long */</style><div class="highlight"><pre><span></span><span class="c1"># Constructed by Delete Last Used (took 0 milliseconds)</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span>
+<span class="kn">from</span> <span class="nn">thunder.executors.torchex</span> <span class="kn">import</span> <span class="n">no_autocast</span>
+
+<span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+<span class="nd">@no_autocast</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">_value_and_grad</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+  <span class="c1"># args: &quot;Collection&quot; </span>
+  <span class="n">t0</span><span class="p">,</span> \
+  <span class="n">t1</span><span class="p">,</span> \
+  <span class="n">t2</span><span class="p">,</span> \
+  <span class="o">=</span> <span class="n">args</span>
+  <span class="k">del</span> <span class="n">args</span>
+  <span class="n">t3</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># t3: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t3 = ltorch.full((64, 64), 1, device=torch.device(&quot;cuda:0&quot;), dtype=torch.float32)  # t3: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t3 = prims.full((64, 64), 1, device=devices.Device(&quot;cuda:0&quot;), dtype=dtypes.float32)  # t3: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t4</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># t4: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t4 = ltorch.full((64, 64), 1, device=torch.device(&quot;cuda:0&quot;), dtype=torch.float32)  # t4: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t4 = prims.full((64, 64), 1, device=devices.Device(&quot;cuda:0&quot;), dtype=dtypes.float32)  # t4: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t5</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># t5: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t5 = ltorch.full((64, 64), 1, device=torch.device(&quot;cuda:0&quot;), dtype=torch.float32)  # t5: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t5 = prims.full((64, 64), 1, device=devices.Device(&quot;cuda:0&quot;), dtype=dtypes.float32)  # t5: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t6</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># t6: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t6 = ltorch.full((64, 64), 1, device=torch.device(&quot;cuda:0&quot;), dtype=torch.float32)  # t6: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t6 = prims.full((64, 64), 1, device=devices.Device(&quot;cuda:0&quot;), dtype=dtypes.float32)  # t6: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t7</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># t7: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t7 = ltorch.full((64, 64), 1, device=torch.device(&quot;cuda:0&quot;), dtype=torch.float32)  # t7: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t7 = prims.full((64, 64), 1, device=devices.Device(&quot;cuda:0&quot;), dtype=dtypes.float32)  # t7: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t8</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># t8: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t8 = ltorch.full((64, 64), 1, device=torch.device(&quot;cuda:0&quot;), dtype=torch.float32)  # t8: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t8 = prims.full((64, 64), 1, device=devices.Device(&quot;cuda:0&quot;), dtype=dtypes.float32)  # t8: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t9</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># t9: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t9 = ltorch.full((64, 64), 1, device=torch.device(&quot;cuda:0&quot;), dtype=torch.float32)  # t9: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t9 = prims.full((64, 64), 1, device=devices.Device(&quot;cuda:0&quot;), dtype=dtypes.float32)  # t9: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t10</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># t10: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t10 = ltorch.full((64, 64), 1, device=torch.device(&quot;cuda:0&quot;), dtype=torch.float32)  # t10: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t10 = prims.full((64, 64), 1, device=devices.Device(&quot;cuda:0&quot;), dtype=dtypes.float32)  # t10: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">p11</span> <span class="o">=</span> <span class="n">torch_all_gather_prim_impl</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">_torch_distributed_distributed_c10d_ProcessGroup_2</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># p11: &quot;FUTURE cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t1</span>
+  <span class="n">t12</span> <span class="o">=</span> <span class="n">torch_wait_prim_impl</span><span class="p">(</span><span class="n">p11</span><span class="p">)</span>  <span class="c1"># t12: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">p11</span>
+  <span class="n">p13</span> <span class="o">=</span> <span class="n">torch_all_gather_prim_impl</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span> <span class="n">_torch_distributed_distributed_c10d_ProcessGroup_2</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># p13: &quot;FUTURE cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t2</span>
+  <span class="n">t14</span> <span class="o">=</span> <span class="n">torch_wait_prim_impl</span><span class="p">(</span><span class="n">p13</span><span class="p">)</span>  <span class="c1"># t14: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">p13</span>
+  <span class="n">t15</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">t12</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># t15: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t15 = ltorch.linear(t0, t12, None)  # t15: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t15 = prims.linear(t0, t12, None)  # t15: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t16</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">t15</span><span class="p">)</span>  <span class="c1"># t16: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t16 = ltorch.tanh(t15)  # t16: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t16 = prims.tanh(t15)  # t16: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t15</span>
+  <span class="n">t17</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">t16</span><span class="p">,</span> <span class="n">t14</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># t17: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t17 = ltorch.linear(t16, t14, None)  # t17: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t17 = prims.linear(t16, t14, None)  # t17: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t18</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t6</span><span class="p">,</span> <span class="n">t7</span><span class="p">)</span>  <span class="c1"># t18: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t18 = ltorch.add(t6, t7, alpha=None)  # t18: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t18 = prims.add(t6, t7)  # t18: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t6</span><span class="p">,</span> <span class="n">t7</span>
+  <span class="n">t19</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t3</span><span class="p">,</span> <span class="n">t8</span><span class="p">)</span>  <span class="c1"># t19: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t19 = ltorch.add(t3, t8, alpha=None)  # t19: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t19 = prims.add(t3, t8)  # t19: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t3</span><span class="p">,</span> <span class="n">t8</span>
+  <span class="n">t20</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t5</span><span class="p">,</span> <span class="n">t9</span><span class="p">)</span>  <span class="c1"># t20: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t20 = ltorch.add(t5, t9, alpha=None)  # t20: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t20 = prims.add(t5, t9)  # t20: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t5</span><span class="p">,</span> <span class="n">t9</span>
+  <span class="n">t21</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">t18</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">))</span>  <span class="c1"># t21: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t21 = ltorch.reshape(t18, (-1, 64))  # t21: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t21 = prims.reshape(t18, (64, 64))  # t21: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t22</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">t21</span><span class="p">,</span> <span class="n">t14</span><span class="p">)</span>  <span class="c1"># t22: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t22 = ltorch.matmul(t21, t14)  # t22: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t22 = prims.matmul(t21, t14)  # t22: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t21</span>
+  <span class="n">t23</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">t18</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">))</span>  <span class="c1"># t23: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t23 = ltorch.reshape(t18, (-1, 64))  # t23: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t23 = prims.reshape(t18, (64, 64))  # t23: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t18</span>
+  <span class="n">t24</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="n">t23</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># t24: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t24 = ltorch.permute(t23, (1, 0))  # t24: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t24 = prims.transpose(t23, (1, 0))  # t24: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t23</span>
+  <span class="n">t25</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">t16</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">))</span>  <span class="c1"># t25: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t25 = ltorch.reshape(t16, (-1, 64))  # t25: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t25 = prims.reshape(t16, (64, 64))  # t25: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t26</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">t24</span><span class="p">,</span> <span class="n">t25</span><span class="p">)</span>  <span class="c1"># t26: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t26 = ltorch.matmul(t24, t25)  # t26: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t26 = prims.matmul(t24, t25)  # t26: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t24</span><span class="p">,</span> <span class="n">t25</span>
+  <span class="n">t27</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t10</span><span class="p">,</span> <span class="n">t22</span><span class="p">)</span>  <span class="c1"># t27: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t27 = ltorch.add(t10, t22, alpha=None)  # t27: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t27 = prims.add(t10, t22)  # t27: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t10</span><span class="p">,</span> <span class="n">t22</span>
+  <span class="n">t28</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t20</span><span class="p">,</span> <span class="n">t26</span><span class="p">)</span>  <span class="c1"># t28: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t28 = ltorch.add(t20, t26, alpha=None)  # t28: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t28 = prims.add(t20, t26)  # t28: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t20</span><span class="p">,</span> <span class="n">t26</span>
+  <span class="n">t29</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">t16</span><span class="p">,</span> <span class="n">t16</span><span class="p">)</span>  <span class="c1"># t29: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t29 = ltorch.mul(t16, t16)  # t29: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t29 = prims.mul(t16, t16)  # t29: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t30</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">t29</span><span class="p">)</span>  <span class="c1"># t30: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t30 = ltorch.sub(1, t29, alpha=None)  # t30: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># _ = prims.convert_element_type(1, float)</span>
+      <span class="c1"># t30 = prims.sub(1.0, t29)  # t30: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t29</span>
+  <span class="n">t31</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">t27</span><span class="p">,</span> <span class="n">t30</span><span class="p">)</span>  <span class="c1"># t31: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t31 = ltorch.mul(t27, t30)  # t31: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t31 = prims.mul(t27, t30)  # t31: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t27</span><span class="p">,</span> <span class="n">t30</span>
+  <span class="n">t32</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">t31</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">))</span>  <span class="c1"># t32: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t32 = ltorch.reshape(t31, (-1, 64))  # t32: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t32 = prims.reshape(t31, (64, 64))  # t32: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t33</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">t32</span><span class="p">,</span> <span class="n">t12</span><span class="p">)</span>  <span class="c1"># t33: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t33 = ltorch.matmul(t32, t12)  # t33: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t33 = prims.matmul(t32, t12)  # t33: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t32</span>
+  <span class="n">t34</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">t31</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">))</span>  <span class="c1"># t34: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t34 = ltorch.reshape(t31, (-1, 64))  # t34: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t34 = prims.reshape(t31, (64, 64))  # t34: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t31</span>
+  <span class="n">t35</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="n">t34</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># t35: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t35 = ltorch.permute(t34, (1, 0))  # t35: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t35 = prims.transpose(t34, (1, 0))  # t35: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t34</span>
+  <span class="n">t36</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">))</span>  <span class="c1"># t36: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t36 = ltorch.reshape(t0, (-1, 64))  # t36: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t36 = prims.reshape(t0, (64, 64))  # t36: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="n">t37</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">t35</span><span class="p">,</span> <span class="n">t36</span><span class="p">)</span>  <span class="c1"># t37: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t37 = ltorch.matmul(t35, t36)  # t37: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t37 = prims.matmul(t35, t36)  # t37: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t35</span><span class="p">,</span> <span class="n">t36</span>
+  <span class="n">t38</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t19</span><span class="p">,</span> <span class="n">t33</span><span class="p">)</span>  <span class="c1"># t38: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t38 = ltorch.add(t19, t33, alpha=None)  # t38: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t38 = prims.add(t19, t33)  # t38: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t19</span><span class="p">,</span> <span class="n">t33</span>
+  <span class="n">t39</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t4</span><span class="p">,</span> <span class="n">t37</span><span class="p">)</span>  <span class="c1"># t39: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t39 = ltorch.add(t4, t37, alpha=None)  # t39: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># t39 = prims.add(t4, t37)  # t39: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t4</span><span class="p">,</span> <span class="n">t37</span>
+  <span class="n">t40</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">true_divide</span><span class="p">(</span><span class="n">t28</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># t40: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t40 = ltorch.true_divide(t28, 2)  # t40: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># _ = prims.convert_element_type(2, float)</span>
+      <span class="c1"># t40 = prims.div(t28, 2.0)  # t40: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t28</span>
+  <span class="n">p41</span> <span class="o">=</span> <span class="n">torch_reduce_scatter_prim_impl</span><span class="p">(</span><span class="n">t40</span><span class="p">,</span> <span class="n">_DistributedReduceOps_3</span><span class="p">,</span> <span class="n">_torch_distributed_distributed_c10d_ProcessGroup_2</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># p41: &quot;FUTURE cuda:0 f32[32, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t40</span>
+  <span class="n">t42</span> <span class="o">=</span> <span class="n">torch_wait_prim_impl</span><span class="p">(</span><span class="n">p41</span><span class="p">)</span>  <span class="c1"># t42: &quot;cuda:0 f32[32, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">p41</span>
+  <span class="n">t43</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">true_divide</span><span class="p">(</span><span class="n">t39</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># t43: &quot;cuda:0 f32[64, 64]&quot;</span>
+    <span class="c1"># t43 = ltorch.true_divide(t39, 2)  # t43: &quot;cuda:0 f32[64, 64]&quot;</span>
+      <span class="c1"># _ = prims.convert_element_type(2, float)</span>
+      <span class="c1"># t43 = prims.div(t39, 2.0)  # t43: &quot;cuda:0 f32[64, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t39</span>
+  <span class="n">p44</span> <span class="o">=</span> <span class="n">torch_reduce_scatter_prim_impl</span><span class="p">(</span><span class="n">t43</span><span class="p">,</span> <span class="n">_DistributedReduceOps_3</span><span class="p">,</span> <span class="n">_torch_distributed_distributed_c10d_ProcessGroup_2</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># p44: &quot;FUTURE cuda:0 f32[32, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">t43</span>
+  <span class="n">t45</span> <span class="o">=</span> <span class="n">torch_wait_prim_impl</span><span class="p">(</span><span class="n">p44</span><span class="p">)</span>  <span class="c1"># t45: &quot;cuda:0 f32[32, 64]&quot;</span>
+  <span class="k">del</span> <span class="n">p44</span>
+  <span class="k">return</span> <span class="p">(({</span><span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="n">t17</span><span class="p">,</span> <span class="s1">&#39;flat_args&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">t0</span><span class="p">,</span> <span class="n">t12</span><span class="p">,</span> <span class="n">t14</span><span class="p">],</span> <span class="s1">&#39;flat_output&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">t17</span><span class="p">,)},</span> <span class="p">((</span><span class="n">t0</span><span class="p">,</span> <span class="n">t14</span><span class="p">,</span> <span class="n">t16</span><span class="p">),</span> <span class="p">())),</span> <span class="p">(</span><span class="n">t38</span><span class="p">,</span> <span class="n">t45</span><span class="p">,</span> <span class="n">t42</span><span class="p">))</span>
+</pre></div></div>
+</div>
+</section>
+<section id="Step-4-:-Running-the-actual-computation">
+<h2>Step 4 : Running the actual computation<a class="headerlink" href="#Step-4-:-Running-the-actual-computation" title="Permalink to this heading">¶</a></h2>
+<p>Running the actual computation will require setting up 2 processes and running our above code in both those processes (which can be tricky with Jupyter Notebook). Instead, we will write a small script and run it with <code class="docutils literal notranslate"><span class="pre">torchrun</span></code> which takes care of setting up the processes and relevant state.</p>
+<p><strong>NOTE</strong>: This requires device running this notebook to have at least 2-GPUs</p>
+<p>In the example below, we will use <code class="docutils literal notranslate"><span class="pre">thunder.distributed.fsdp</span></code> which does the same as what we did above (with some extra checks). The code below should look familiar as it is roughly all the above pieces in a single script.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> thunder_fsdp_simple_example.py
+
+<span class="c1"># imports</span>
+<span class="kn">from</span> <span class="nn">thunder.tests.lit_gpt_model</span> <span class="kn">import</span> <span class="n">GPT</span><span class="p">,</span> <span class="n">Config</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.distributed</span>
+<span class="kn">import</span> <span class="nn">thunder</span>
+<span class="kn">import</span> <span class="nn">thunder.distributed</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># # # # # # # #</span>
+<span class="c1"># Create Model</span>
+<span class="c1"># # # # # # # #</span>
+
+<span class="c1"># NOTE: We create the model on CPU.</span>
+<span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span>
+<span class="n">dim</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="k">def</span> <span class="nf">create_model</span><span class="p">():</span>
+    <span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">())</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">layers</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
+<span class="c1"># Input</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># # # # # # # #</span>
+<span class="c1"># Setup for distributed</span>
+<span class="c1"># # # # # # # #</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">init_process_group</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="s1">&#39;nccl&#39;</span><span class="p">)</span>
+
+<span class="n">rank</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;LOCAL_RANK&quot;</span><span class="p">])</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;cuda:</span><span class="si">{</span><span class="n">rank</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1"># # # # # # # #</span>
+<span class="c1"># Move inputs to correct device</span>
+<span class="c1"># # # # # # # #</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># # # # # # # #</span>
+<span class="c1"># Wrap the model in thunder.distributed.fsdp</span>
+<span class="c1"># # # # # # # #</span>
+
+<span class="c1"># thunder.distributed.fsdp takes care of moving the parameter</span>
+<span class="c1"># shard to the correct GPU for the current process.</span>
+<span class="n">cmodel</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">thunder</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">fsdp</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+
+<span class="c1"># Run the forward pass.</span>
+<span class="n">cmodel</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># # # # # # # #</span>
+<span class="c1"># Check the traces</span>
+<span class="c1"># # # # # # # #</span>
+<span class="n">fwd_traces</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">last_traces</span><span class="p">(</span><span class="n">cmodel</span><span class="p">)</span>
+<span class="n">bwd_traces</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">last_backward_traces</span><span class="p">(</span><span class="n">cmodel</span><span class="p">)</span>
+
+<span class="c1"># # # # # # # #</span>
+<span class="c1"># Print and check to see if they match ours</span>
+<span class="c1"># # # # # # # #</span>
+<span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fwd_traces</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;*******&quot;</span><span class="o">*</span> <span class="mi">8</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">bwd_traces</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Overwriting thunder_fsdp_simple_example.py
+</pre></div></div>
+</div>
+<p>Let us run the above script and check what the trace looks like.</p>
+<p>We can observe that forward trace has <code class="docutils literal notranslate"><span class="pre">torch_all_gather_prim_impl</span></code> to gather the parameter before forward pass and the backward trace has <code class="docutils literal notranslate"><span class="pre">torch_reduce_scatter_prim_impl</span></code> to reduce and scatter the gradients back to different GPUs. This is similar to our implementation above.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>torchrun<span class="w"> </span>--nproc_per_node<span class="o">=</span><span class="m">2</span><span class="w"> </span>thunder_fsdp_simple_example.py
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+W0314 08:26:39.130000 140292199276608 torch/distributed/run.py:757]
+W0314 08:26:39.130000 140292199276608 torch/distributed/run.py:757] *****************************************
+W0314 08:26:39.130000 140292199276608 torch/distributed/run.py:757] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed.
+W0314 08:26:39.130000 140292199276608 torch/distributed/run.py:757] *****************************************
+# Constructed by Delete Last Used (took 0 milliseconds)
+import torch
+import torch.nn.functional
+from thunder.executors.torchex import no_autocast
+
+@torch.no_grad()
+@no_autocast()
+def augmented_forward_fn(input, t_0_bias, t_2_bias, t_0_weight, t_2_weight):
+  # input: &#34;cuda:0 f32[64, 64]&#34;
+  # t_0_bias: &#34;cuda:0 f32[32]&#34;
+  p0 = torch_all_gather_prim_impl(t_0_bias, _torch_distributed_distributed_c10d_ProcessGroup_1, True)  # p0: &#34;FUTURE cuda:0 f32[64]&#34;
+  # t_2_bias: &#34;cuda:0 f32[32]&#34;
+  p2 = torch_all_gather_prim_impl(t_2_bias, _torch_distributed_distributed_c10d_ProcessGroup_1, True)  # p2: &#34;FUTURE cuda:0 f32[64]&#34;
+  # t_0_weight: &#34;cuda:0 f32[32, 64]&#34;
+  p4 = torch_all_gather_prim_impl(t_0_weight, _torch_distributed_distributed_c10d_ProcessGroup_1, True)  # p4: &#34;FUTURE cuda:0 f32[64, 64]&#34;
+  # t_2_weight: &#34;cuda:0 f32[32, 64]&#34;
+  p9 = torch_all_gather_prim_impl(t_2_weight, _torch_distributed_distributed_c10d_ProcessGroup_1, True)  # p9: &#34;FUTURE cuda:0 f32[64, 64]&#34;
+  t1 = torch_wait_prim_impl(p0)  # t1: &#34;cuda:0 f32[64]&#34;
+  del p0
+  t3 = torch_wait_prim_impl(p2)  # t3: &#34;cuda:0 f32[64]&#34;
+  del p2
+  t5 = torch_wait_prim_impl(p4)  # t5: &#34;cuda:0 f32[64, 64]&#34;
+  del p4
+  t6 = torch.nn.functional.linear(input, t5, t1)  # t6: &#34;cuda:0 f32[64, 64]&#34;
+    # t6 = ltorch.linear(input, t5, t1)  # t6: &#34;cuda:0 f32[64, 64]&#34;
+      # t6 = prims.linear(input, t5, t1)  # t6: &#34;cuda:0 f32[64, 64]&#34;
+  del t5, t1
+  [t7, t8] = nvFusion0(t6)
+    # t7 = prims.gt(t6, 0.0)  # t7: &#34;cuda:0 b8[64, 64]&#34;
+    # t8 = prims.where(t7, t6, 0.0)  # t8: &#34;cuda:0 f32[64, 64]&#34;
+  del t6
+  t10 = torch_wait_prim_impl(p9)  # t10: &#34;cuda:0 f32[64, 64]&#34;
+  del p9
+  t11 = torch.nn.functional.linear(t8, t10, t3)  # t11: &#34;cuda:0 f32[64, 64]&#34;
+    # t11 = ltorch.linear(t8, t10, t3)  # t11: &#34;cuda:0 f32[64, 64]&#34;
+      # t11 = prims.linear(t8, t10, t3)  # t11: &#34;cuda:0 f32[64, 64]&#34;
+  del t3
+  return {&#39;output&#39;: t11, &#39;flat_args&#39;: [input, t_0_bias, t_2_bias, t_0_weight, t_2_weight], &#39;flat_output&#39;: (t11,)}, ((input, t10, t7, t8), ())
+********************************************************
+# Constructed by Delete Last Used (took 0 milliseconds)
+import torch
+from thunder.executors.torchex import no_autocast
+
+@torch.no_grad()
+@no_autocast()
+def backward_fn(saved_for_backward, cotangents):
+  # saved_for_backward: &#34;Collection&#34;
+  # cotangents: &#34;Collection&#34;
+  C0, \
+  _, \
+  = saved_for_backward
+  clear_collection(saved_for_backward)
+  del saved_for_backward
+  t0, \
+  = cotangents
+  clear_collection(cotangents)
+  del cotangents
+  input, \
+  t10, \
+  t7, \
+  t8, \
+  = C0
+  clear_collection(C0)
+  del C0
+  t31 = torch.reshape(t0, (-1, 64))  # t31: &#34;cuda:0 f32[64, 64]&#34;
+    # t31 = ltorch.reshape(t0, (-1, 64))  # t31: &#34;cuda:0 f32[64, 64]&#34;
+      # t31 = prims.reshape(t0, (64, 64))  # t31: &#34;cuda:0 f32[64, 64]&#34;
+  t32 = torch.permute(t31, (1, 0))  # t32: &#34;cuda:0 f32[64, 64]&#34;
+    # t32 = ltorch.permute(t31, (1, 0))  # t32: &#34;cuda:0 f32[64, 64]&#34;
+      # t32 = prims.transpose(t31, (1, 0))  # t32: &#34;cuda:0 f32[64, 64]&#34;
+  t33 = torch.reshape(t8, (-1, 64))  # t33: &#34;cuda:0 f32[64, 64]&#34;
+    # t33 = ltorch.reshape(t8, (-1, 64))  # t33: &#34;cuda:0 f32[64, 64]&#34;
+      # t33 = prims.reshape(t8, (64, 64))  # t33: &#34;cuda:0 f32[64, 64]&#34;
+  del t8
+  t45 = torch.reshape(input, (-1, 64))  # t45: &#34;cuda:0 f32[64, 64]&#34;
+    # t45 = ltorch.reshape(input, (-1, 64))  # t45: &#34;cuda:0 f32[64, 64]&#34;
+      # t45 = prims.reshape(input, (64, 64))  # t45: &#34;cuda:0 f32[64, 64]&#34;
+  del input
+  [t51] = nvFusion0(t0)
+    # t35 = prims.sum(t0, (0,))  # t35: &#34;cuda:0 f32[64]&#34;
+    # t51 = prims.div(t35, 2.0)  # t51: &#34;cuda:0 f32[64]&#34;
+  del t0
+  p52 = torch_reduce_scatter_prim_impl(t51, _DistributedReduceOps_0, _torch_distributed_distributed_c10d_ProcessGroup_1, True)  # p52: &#34;FUTURE cuda:0 f32[32]&#34;
+  del t51
+  t30 = torch.matmul(t31, t10)  # t30: &#34;cuda:0 f32[64, 64]&#34;
+    # t30 = ltorch.matmul(t29, t10)  # t30: &#34;cuda:0 f32[64, 64]&#34;
+      # t30 = prims.matmul(t29, t10)  # t30: &#34;cuda:0 f32[64, 64]&#34;
+  del t31, t10
+  t34 = torch.matmul(t32, t33)  # t34: &#34;cuda:0 f32[64, 64]&#34;
+    # t34 = ltorch.matmul(t32, t33)  # t34: &#34;cuda:0 f32[64, 64]&#34;
+      # t34 = prims.matmul(t32, t33)  # t34: &#34;cuda:0 f32[64, 64]&#34;
+  del t32, t33
+  [t36, t39, t54] = nvFusion1(t30, t34, t7)
+    # t39 = prims.where(t7, t30, 0.0)  # t39: &#34;cuda:0 f32[64, 64]&#34;
+    # t47 = prims.sum(t39, (0,))  # t47: &#34;cuda:0 f32[64]&#34;
+    # t54 = prims.div(t47, 2.0)  # t54: &#34;cuda:0 f32[64]&#34;
+    # t36 = prims.div(t34, 2.0)  # t36: &#34;cuda:0 f32[64, 64]&#34;
+  del t30, t34, t7
+  p37 = torch_reduce_scatter_prim_impl(t36, _DistributedReduceOps_0, _torch_distributed_distributed_c10d_ProcessGroup_1, True)  # p37: &#34;FUTURE cuda:0 f32[32, 64]&#34;
+  del t36
+  p55 = torch_reduce_scatter_prim_impl(t54, _DistributedReduceOps_0, _torch_distributed_distributed_c10d_ProcessGroup_1, True)  # p55: &#34;FUTURE cuda:0 f32[32]&#34;
+  del t54
+  t43 = torch.reshape(t39, (-1, 64))  # t43: &#34;cuda:0 f32[64, 64]&#34;
+    # t43 = ltorch.reshape(t39, (-1, 64))  # t43: &#34;cuda:0 f32[64, 64]&#34;
+      # t43 = prims.reshape(t39, (64, 64))  # t43: &#34;cuda:0 f32[64, 64]&#34;
+  del t39
+  t44 = torch.permute(t43, (1, 0))  # t44: &#34;cuda:0 f32[64, 64]&#34;
+    # t44 = ltorch.permute(t43, (1, 0))  # t44: &#34;cuda:0 f32[64, 64]&#34;
+      # t44 = prims.transpose(t43, (1, 0))  # t44: &#34;cuda:0 f32[64, 64]&#34;
+  del t43
+  t46 = torch.matmul(t44, t45)  # t46: &#34;cuda:0 f32[64, 64]&#34;
+    # t46 = ltorch.matmul(t44, t45)  # t46: &#34;cuda:0 f32[64, 64]&#34;
+      # t46 = prims.matmul(t44, t45)  # t46: &#34;cuda:0 f32[64, 64]&#34;
+  del t44, t45
+  [t48] = nvFusion2(t46)
+    # t48 = prims.div(t46, 2.0)  # t48: &#34;cuda:0 f32[64, 64]&#34;
+  del t46
+  p49 = torch_reduce_scatter_prim_impl(t48, _DistributedReduceOps_0, _torch_distributed_distributed_c10d_ProcessGroup_1, True)  # p49: &#34;FUTURE cuda:0 f32[32, 64]&#34;
+  del t48
+  t53 = torch_wait_prim_impl(p52)  # t53: &#34;cuda:0 f32[32]&#34;
+  del p52
+  t38 = torch_wait_prim_impl(p37)  # t38: &#34;cuda:0 f32[32, 64]&#34;
+  del p37
+  t56 = torch_wait_prim_impl(p55)  # t56: &#34;cuda:0 f32[32]&#34;
+  del p55
+  t50 = torch_wait_prim_impl(p49)  # t50: &#34;cuda:0 f32[32, 64]&#34;
+  del p49
+  return (None, t56, t53, t50, t38)
+</pre></div></div>
+</div>
+</section>
+<section id="Conclusion">
+<h2>Conclusion<a class="headerlink" href="#Conclusion" title="Permalink to this heading">¶</a></h2>
+<p>We have created our implementation of FSDP to shard our model across multiple GPUs. In the process, we also learned that:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">thunder</span></code> provides us with primitives for synchronization across mutiple GPUs.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">thunder</span></code> also takes care of implementing the backward support for the synchronization primitives, so we don’t have to explicitly do anything to get the backward working.</p></li>
+<li><p>We can just easily apply <code class="docutils literal notranslate"><span class="pre">thunder.distributed.fsdp</span></code> to our model and it will take care of sharding the parameters and also adding synchronizations to our model. Also, we can easily check the modifications by inspecting the traces.</p></li>
+</ol>
+</section>
+</section>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../advanced/inside_thunder.html" class="btn btn-neutral float-right" title="Inside Thunder" accesskey="n" rel="next">Next <img src="../../_static/images/chevron-right-orange.svg" class="next-page"></a>
+      
+      
+        <a href="../../intermediate/whats_next.html" class="btn btn-neutral" title="What’s Next" accesskey="p" rel="prev"><img src="../../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+      
+    </div>
+  
+
+  
+
+    <hr>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2024 Lightning-AI et al.
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">FSDP Tutorial</a><ul>
+<li><a class="reference internal" href="#Introduction">Introduction</a></li>
+<li><a class="reference internal" href="#What-is-Zero2-strategy-for-FSDP?">What is Zero2 strategy for FSDP?</a></li>
+<li><a class="reference internal" href="#Example-Model">Example Model</a></li>
+<li><a class="reference internal" href="#Step-1-:-Configuration">Step 1 : Configuration</a></li>
+<li><a class="reference internal" href="#Step-2:-Function-to-shard-parameters">Step 2: Function to shard parameters</a></li>
+<li><a class="reference internal" href="#Step-3:-Add-an-operation-to-synchronize-the-parameters-before-calling-the-model.forward.">Step 3: Add an operation to synchronize the parameters before calling the model.forward.</a></li>
+<li><a class="reference internal" href="#Step-4-:-Running-the-actual-computation">Step 4 : Running the actual computation</a></li>
+<li><a class="reference internal" href="#Conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+         <script src="../../_static/jquery.js"></script>
+         <script src="../../_static/underscore.js"></script>
+         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+         <script src="../../_static/doctools.js"></script>
+         <script src="../../_static/sphinx_highlight.js"></script>
+         <script src="../../_static/clipboard.min.js"></script>
+         <script src="../../_static/copybutton.js"></script>
+         <script src="../../_static/copybutton.js"></script>
+         <script>let toggleHintShow = 'Click to show';</script>
+         <script>let toggleHintHide = 'Click to hide';</script>
+         <script>let toggleOpenOnPrint = 'true';</script>
+         <script src="../../_static/togglebutton.js"></script>
+         <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+     
+
+  
+
+  <script type="text/javascript" src="../../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../../_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <!-- <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources"> -->
+    <!-- <div class="container"> -->
+      <!-- <div class="row"> -->
+        <!--
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://lightning-thunder.rtfd.io/en/latest">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://lightning-thunder.readthedocs.io/en/latest/#tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://lightning-thunder.readthedocs.io/en/latest/#community-examples">View Resources</a>
+        </div>
+        -->
+      <!-- </div> -->
+    <!-- </div> -->
+  <!-- </div> -->
+
+  <!--
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://lightning-thunder.rtfd.io/en/latest/" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://lightning-thunder.rtfd.io/en/latest/">PyTorch</a></li>
+            <li><a href="https://lightning-thunder.readthedocs.io/en/latest/introduction_guide.html">Get Started</a></li>
+            <li><a href="https://lightning-thunder.rtfd.io/en/latest/">Features</a></li>
+            <li><a href="">Ecosystem</a></li>
+            <li><a href="https://www.Lightning-AI.ai/blog">Blog</a></li>
+            <li><a href="https://github.com/Lightning-AI/lightning-thunder/blob/master/CONTRIBUTING.md">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://lightning-thunder.readthedocs.io/en/latest/#community-examples">Resources</a></li>
+            <li><a href="https://lightning-thunder.readthedocs.io/en/latest/#tutorials">Tutorials</a></li>
+            <li><a href="https://lightning-thunder.rtfd.io/en/latest">Docs</a></li>
+            <li><a href="https://pytorch-lightning.slack.com" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/Lightning-AI/lightning-thunder/issues" target="_blank">Github Issues</a></li>
+            <li><a href="" target="_blank">Brand Guidelines</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Stay Connected</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com/LightningAI" target="_blank" class="twitter"></a>
+            <a href="" target="_blank" class="youtube"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  -->
+
+  <div class="cookie-banner-wrapper">
+  <div class="container">
+    <p class="gdpr-notice">To analyze traffic and optimize your experience, we serve cookies on this site. By clicking or navigating, you agree to allow our usage of cookies. Read PyTorch Lightning's <a href="https://pytorchlightning.ai/privacy-policy">Privacy Policy</a>.</p>
+    <img class="close-button" src="../../_static/images/pytorch-x.svg">
+  </div>
+</div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://lightning-thunder.rtfd.io/en/latest/" aria-label="PyTorch Lightning"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://lightning-thunder.readthedocs.io/en/latest/introduction_guide.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://www.Lightning-AI.ai/blog">Blog</a>
+          </li>
+
+          <li class="resources-mobile-menu-title">
+            Ecosystem
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/stable/">PyTorch Lightning</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/fabric/stable/">Lightning Fabric</a>
+            </li>
+
+            <li>
+              <a href="https://torchmetrics.readthedocs.io/en/stable/">TorchMetrics</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/fabric/stable/">Fabric</a>
+            </li>
+          </ul>
+
+          <!--<li class="resources-mobile-menu-title">
+            Resources
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://lightning-thunder.readthedocs.io/en/latest/#community-examples">Developer Resources</a>
+            </li>
+
+            <li>
+              <a href="https://lightning-thunder.rtfd.io/en/latest/">About</a>
+            </li>
+
+            <li>
+              <a href="">Models (Beta)</a>
+            </li>
+
+            <li>
+              <a href="">Community</a>
+            </li>
+
+            <li>
+              <a href="">Forums</a>
+            </li>
+          </ul>-->
+
+          <li>
+            <a href="https://github.com/Lightning-AI/lightning-thunder">Github</a>
+          </li>
+
+          <li>
+            <a href="https://www.lightning.ai/">Lightning.ai</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQBQ3CV"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+ </body>
+</html>

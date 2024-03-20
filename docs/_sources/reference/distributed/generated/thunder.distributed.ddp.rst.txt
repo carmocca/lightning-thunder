@@ -1,0 +1,6 @@
+﻿thunder.distributed.ddp
+=======================
+
+.. currentmodule:: thunder.distributed
+
+.. autofunction:: ddp

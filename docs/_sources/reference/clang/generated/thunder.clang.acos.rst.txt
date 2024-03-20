@@ -1,0 +1,6 @@
+﻿thunder.clang.acos
+==================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: acos

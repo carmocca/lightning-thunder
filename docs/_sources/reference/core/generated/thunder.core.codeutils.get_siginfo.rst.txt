@@ -1,0 +1,6 @@
+﻿thunder.core.codeutils.get\_siginfo
+===================================
+
+.. currentmodule:: thunder.core.codeutils
+
+.. autofunction:: get_siginfo

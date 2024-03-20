@@ -1,0 +1,50 @@
+﻿thunder.core.trace.TraceCtx
+===========================
+
+.. currentmodule:: thunder.core.trace
+
+.. autoclass:: TraceCtx
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TraceCtx.__init__
+      ~TraceCtx.add_bound_symbol
+      ~TraceCtx.add_name
+      ~TraceCtx.add_object
+      ~TraceCtx.get_provenance
+      ~TraceCtx.has_name
+      ~TraceCtx.is_constant
+      ~TraceCtx.make_name
+      ~TraceCtx.make_object_name
+      ~TraceCtx.mark_complete
+      ~TraceCtx.peek_scope
+      ~TraceCtx.pop_scope
+      ~TraceCtx.post_unpack
+      ~TraceCtx.push_scope
+      ~TraceCtx.python
+      ~TraceCtx.python_callable
+      ~TraceCtx.python_ctx
+      ~TraceCtx.set_provenance
+      ~TraceCtx.siginfo
+      ~TraceCtx.unpacked
+      ~TraceCtx.unpacking
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TraceCtx.is_prologue
+      ~TraceCtx.output
+      ~TraceCtx.prologue
+   
+   

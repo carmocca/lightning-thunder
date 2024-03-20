@@ -1,0 +1,6 @@
+﻿thunder.executors.torch\_compile.to\_torch\_translator
+======================================================
+
+.. currentmodule:: thunder.executors.torch_compile
+
+.. autofunction:: to_torch_translator

@@ -1,0 +1,22 @@
+﻿thunder.torch.torchsymbol
+=========================
+
+.. currentmodule:: thunder.torch
+
+.. autoclass:: torchsymbol
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~torchsymbol.__init__
+   
+   
+
+   
+   
+   

@@ -1,0 +1,6 @@
+﻿thunder.clang.remainder
+=======================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: remainder

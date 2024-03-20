@@ -1,0 +1,6 @@
+﻿thunder.core.langctxs.set\_langctx
+==================================
+
+.. currentmodule:: thunder.core.langctxs
+
+.. autofunction:: set_langctx

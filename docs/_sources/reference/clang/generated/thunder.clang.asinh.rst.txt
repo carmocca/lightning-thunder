@@ -1,0 +1,6 @@
+﻿thunder.clang.asinh
+===================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: asinh

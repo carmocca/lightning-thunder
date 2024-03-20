@@ -1,0 +1,6 @@
+﻿thunder.clang.uniform\_like
+===========================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: uniform_like

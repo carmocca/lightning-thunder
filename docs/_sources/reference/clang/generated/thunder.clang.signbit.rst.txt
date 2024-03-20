@@ -1,0 +1,6 @@
+﻿thunder.clang.signbit
+=====================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: signbit

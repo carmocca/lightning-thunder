@@ -1,0 +1,6 @@
+﻿thunder.clang.bitwise\_xor
+==========================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: bitwise_xor

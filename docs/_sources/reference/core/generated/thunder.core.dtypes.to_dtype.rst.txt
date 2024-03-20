@@ -1,0 +1,6 @@
+﻿thunder.core.dtypes.to\_dtype
+=============================
+
+.. currentmodule:: thunder.core.dtypes
+
+.. autofunction:: to_dtype

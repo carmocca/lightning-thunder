@@ -1,0 +1,6 @@
+﻿thunder.executors.passes.transform\_for\_execution
+==================================================
+
+.. currentmodule:: thunder.executors.passes
+
+.. autofunction:: transform_for_execution

@@ -1,0 +1,6 @@
+﻿thunder.clang.tan
+=================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: tan

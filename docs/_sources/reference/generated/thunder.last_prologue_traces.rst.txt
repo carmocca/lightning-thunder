@@ -1,0 +1,6 @@
+﻿thunder.last\_prologue\_traces
+==============================
+
+.. currentmodule:: thunder
+
+.. autofunction:: last_prologue_traces

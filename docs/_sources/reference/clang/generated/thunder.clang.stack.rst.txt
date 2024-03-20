@@ -1,0 +1,6 @@
+﻿thunder.clang.stack
+===================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: stack

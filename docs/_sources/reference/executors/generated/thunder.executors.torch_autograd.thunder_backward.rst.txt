@@ -1,0 +1,6 @@
+﻿thunder.executors.torch\_autograd.thunder\_backward
+===================================================
+
+.. currentmodule:: thunder.executors.torch_autograd
+
+.. autofunction:: thunder_backward

@@ -1,0 +1,159 @@
+﻿thunder.core.prims.PrimIDs
+==========================
+
+.. currentmodule:: thunder.core.prims
+
+.. autoclass:: PrimIDs
+
+   
+   .. automethod:: __init__
+
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~PrimIDs.ASSERT_TENSOR_METADATA
+      ~PrimIDs.CHECK_TENSOR_SHAPE_AND_METADATA
+      ~PrimIDs.CHECK_NONE
+      ~PrimIDs.CHECK_EMPTY
+      ~PrimIDs.CHECK_LITERAL_LIKE
+      ~PrimIDs.CHECK_TYPE
+      ~PrimIDs.CHECK_INSTANCE
+      ~PrimIDs.CHECK_NUMBER_TYPE_AND_VALUE
+      ~PrimIDs.CHECK_BOOL_CONVERSION
+      ~PrimIDs.CHECK_STRING_VALUE
+      ~PrimIDs.CHECK_LEN
+      ~PrimIDs.ASSERT_COMPARE
+      ~PrimIDs.PYTHON_VARS
+      ~PrimIDs.UNPACK_FUNCTION_OBJ
+      ~PrimIDs.UNPACK_CACHE_INFO
+      ~PrimIDs.UNPACK_ATTR
+      ~PrimIDs.UNPACK_GETITEM
+      ~PrimIDs.UNPACK_EMPTY_DICT
+      ~PrimIDs.UNPACK_ITER
+      ~PrimIDs.UNPACK_NEXT
+      ~PrimIDs.UNPACK_KEY
+      ~PrimIDs.UNPACK_SEQUENCE
+      ~PrimIDs.UNPACK_TRIVIAL
+      ~PrimIDs.UNPACK_TUPLE
+      ~PrimIDs.UNPACK_LIST
+      ~PrimIDs.UNPACK_DICT_KEY
+      ~PrimIDs.CONSTRUCT_TUPLE
+      ~PrimIDs.PACK_SETITEM
+      ~PrimIDs.COMMENT
+      ~PrimIDs.DEL
+      ~PrimIDs.PRINT
+      ~PrimIDs.RETURN
+      ~PrimIDs.GET_GRAD
+      ~PrimIDs.PUT_GRAD
+      ~PrimIDs.CONVERT_ELEMENT_TYPE
+      ~PrimIDs.DEVICE_PUT
+      ~PrimIDs.NUMPY_ARRAY_TO_TORCH_TENSOR
+      ~PrimIDs.EXOGENOUS_LIKE
+      ~PrimIDs.FULL
+      ~PrimIDs.IOTA
+      ~PrimIDs.UNIFORM
+      ~PrimIDs.UNIFORM_PHILOX
+      ~PrimIDs.RANDN
+      ~PrimIDs.TENSOR_FROM_SEQUENCE
+      ~PrimIDs.MULTINOMIAL
+      ~PrimIDs.BROADCAST_IN_DIM
+      ~PrimIDs.CAT
+      ~PrimIDs.FLIP
+      ~PrimIDs.RESHAPE
+      ~PrimIDs.SLICE
+      ~PrimIDs.SQUEEZE
+      ~PrimIDs.TRANSPOSE
+      ~PrimIDs.VIEW
+      ~PrimIDs.STRIDE_ORDER
+      ~PrimIDs.PY_ABS
+      ~PrimIDs.ABS
+      ~PrimIDs.ACOS
+      ~PrimIDs.ACOSH
+      ~PrimIDs.ASIN
+      ~PrimIDs.ASINH
+      ~PrimIDs.ATAN
+      ~PrimIDs.ATANH
+      ~PrimIDs.BITWISE_NOT
+      ~PrimIDs.CEIL
+      ~PrimIDs.COS
+      ~PrimIDs.COSH
+      ~PrimIDs.DIGAMMA
+      ~PrimIDs.ERF
+      ~PrimIDs.ERFC
+      ~PrimIDs.ERFCINV
+      ~PrimIDs.ERFINV
+      ~PrimIDs.EXP
+      ~PrimIDs.EXP2
+      ~PrimIDs.EXPM1
+      ~PrimIDs.FLOOR
+      ~PrimIDs.ISFINITE
+      ~PrimIDs.LGAMMA
+      ~PrimIDs.LOG
+      ~PrimIDs.LOG10
+      ~PrimIDs.LOG1P
+      ~PrimIDs.LOG2
+      ~PrimIDs.NDTRI
+      ~PrimIDs.NEG
+      ~PrimIDs.RECIPROCAL
+      ~PrimIDs.ROUND
+      ~PrimIDs.RSQRT
+      ~PrimIDs.SIGN
+      ~PrimIDs.SIGNBIT
+      ~PrimIDs.SIN
+      ~PrimIDs.SINH
+      ~PrimIDs.SQRT
+      ~PrimIDs.TAN
+      ~PrimIDs.TANH
+      ~PrimIDs.TRUNC
+      ~PrimIDs.REAL
+      ~PrimIDs.ADD
+      ~PrimIDs.ATAN2
+      ~PrimIDs.BITWISE_AND
+      ~PrimIDs.BITWISE_OR
+      ~PrimIDs.BITWISE_XOR
+      ~PrimIDs.DIV
+      ~PrimIDs.EQ
+      ~PrimIDs.PY_FLOORDIV
+      ~PrimIDs.FMOD
+      ~PrimIDs.GE
+      ~PrimIDs.GT
+      ~PrimIDs.LE
+      ~PrimIDs.LT
+      ~PrimIDs.MAXIMUM
+      ~PrimIDs.MINIMUM
+      ~PrimIDs.MUL
+      ~PrimIDs.NE
+      ~PrimIDs.NEXTAFTER
+      ~PrimIDs.POW
+      ~PrimIDs.REMAINDER
+      ~PrimIDs.SUB
+      ~PrimIDs.ZETA
+      ~PrimIDs.WHERE
+      ~PrimIDs.AMAX
+      ~PrimIDs.AMIN
+      ~PrimIDs.PROD
+      ~PrimIDs.SUM
+      ~PrimIDs.VAR
+      ~PrimIDs.VAR_MEAN
+      ~PrimIDs.ARGMAX
+      ~PrimIDs.ARGMIN
+      ~PrimIDs.INDEX_ADD
+      ~PrimIDs.INDEX_PUT
+      ~PrimIDs.SCATTER_ADD
+      ~PrimIDs.TAKE
+      ~PrimIDs.TAKE_ALONG_AXIS
+      ~PrimIDs.MATMUL
+      ~PrimIDs.CONVOLUTION
+      ~PrimIDs.EMBEDDING
+      ~PrimIDs.EMBEDDING_BACKWARD
+      ~PrimIDs.LINEAR
+      ~PrimIDs.PAD
+      ~PrimIDs.ITEM
+   
+   

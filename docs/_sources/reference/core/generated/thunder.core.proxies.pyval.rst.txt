@@ -1,0 +1,6 @@
+﻿thunder.core.proxies.pyval
+==========================
+
+.. currentmodule:: thunder.core.proxies
+
+.. autofunction:: pyval

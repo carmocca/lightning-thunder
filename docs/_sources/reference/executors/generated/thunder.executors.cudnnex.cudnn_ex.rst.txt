@@ -1,0 +1,6 @@
+﻿thunder.executors.cudnnex.cudnn\_ex
+===================================
+
+.. currentmodule:: thunder.executors.cudnnex
+
+.. autodata:: cudnn_ex

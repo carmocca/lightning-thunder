@@ -1,0 +1,6 @@
+﻿thunder.core.transforms.insert\_inplace
+=======================================
+
+.. currentmodule:: thunder.core.transforms
+
+.. autofunction:: insert_inplace

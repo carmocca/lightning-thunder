@@ -1,0 +1,1252 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-PQBQ3CV');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="google-site-verification" content="okUst94cAlWSsUsGZTB4xSS4UKTtRV8Nu5XZ9pdd3Aw" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Extending Thunder &mdash; lightning-thunder 0.1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/icon.svg"/>
+  
+  
+  
+    <link rel="canonical" href="https://github.com/Lightning-AI/lightning-thunder/notebooks/dev_tutorials/extend.html"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/sphinx_paramlinks.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="thunder" href="../../reference/thunder.html" />
+    <link rel="prev" title="Defining custom forward and backward for existing operators" href="../adding_custom_operator_backward.html" />
+  <!-- Google Analytics -->
+  
+  <!-- End Google Analytics -->
+  
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/UCity/UCity-Light.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/UCity/UCity-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/UCity/UCity-Semibold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../_static/fonts/Inconsolata/Inconsolata.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js" integrity="sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp" crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="../../_static/js/react/react.jsx" type="text/babel"></script>
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://lightning-thunder.rtfd.io/en/latest/" aria-label="PyTorch Lightning">
+      <!--  <img class="call-to-action-img" src="../../_static/images/logo-lightning-icon.png"/> -->
+      </a>
+
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://lightning-thunder.readthedocs.io/en/latest/introduction_guide.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://www.Lightning-AI.ai/blog">Blog</a>
+          </li>
+
+          <li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-orange-arrow">
+                Docs
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning.ai/docs/pytorch/stable/">
+                  <span class="dropdown-title">PyTorch Lightning</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning.ai/docs/fabric/stable/">
+                  <span class="dropdown-title">Lightning Fabric</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://torchmetrics.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">TorchMetrics</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-flash.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Flash</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-bolts.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Bolts</span>
+                </a>
+            </div>
+          </li>
+
+          <!--<li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-arrow">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="">
+                  <span class="dropdown-title">Community</span>
+                  <p>Join the PyTorch developer community to contribute, learn, and get your questions answered.</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://lightning-thunder.readthedocs.io/en/latest/#community-examples">
+                  <span class="dropdown-title">Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <a class="nav-dropdown-item" href="" target="_blank">
+                  <span class="dropdown-title">Forums</span>
+                  <p>A place to discuss PyTorch code, issues, install, research</p>
+                </a>
+                <a class="nav-dropdown-item" href="">
+                  <span class="dropdown-title">Models (Beta)</span>
+                  <p>Discover, publish, and reuse pre-trained models</p>
+                </a>
+              </div>
+            </div>
+          </li>-->
+
+          
+
+          <li>
+            <a href="https://github.com/Lightning-AI/lightning-thunder">GitHub</a>
+          </li>
+
+          <li>
+            <a href="https://www.lightning.ai/">Lightning AI</a>
+          </li>
+
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  0.1.0
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Welcome to ⚡ Lightning Thunder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fundamentals/installation.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fundamentals/hello_world.html">Hello World</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../fundamentals/examine.html">Using examine</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../basic/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zero_to_thunder.html">Zero to Thunder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basic/inspecting_traces.html">Thunder step by step</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basic/sharp_edges.html">The sharp edges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basic/mlp_mnist.html">Train a MLP on MNIST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../functional_jit.html">Functional jit</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Intermediate</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intermediate/additional_executors.html">Additional executors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intermediate/ddp.html">Distributed Data Parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intermediate/whats_next.html">What's next</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fsdp_tutorial.html">FSDP Under the Hood Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced/inside_thunder.html">Inside thunder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced/extending.html">Extending thunder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../adding_custom_operator.html">Defining new Thunder operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../adding_custom_operator_backward.html">Defining custom forward and backward for existing operators</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Experimental dev tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Extending Thunder</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/thunder.html">thunder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/common/index.html">thunder.common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/core/index.html">thunder.core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/clang/index.html">thunder.clang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/examine/index.html">thunder.examine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/distributed/index.html">thunder.distributed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/executors/index.html">thunder.executors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/torch/index.html">thunder.torch</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../../index.html">
+          
+            Docs
+          
+        </a> &gt;
+      </li>
+
+        
+      <li>Extending Thunder</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/dev_tutorials/extend.ipynb.txt" rel="nofollow"><img src="../../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <section id="Extending-Thunder">
+<h1>Extending Thunder<a class="headerlink" href="#Extending-Thunder" title="Permalink to this heading">¶</a></h1>
+<p>This notebook shows how to use thunder’s extend submodule to add new operations and custom grad and execution transforms.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
+
+<span class="kn">import</span> <span class="nn">thunder</span>
+<span class="kn">import</span> <span class="nn">thunder.torch</span> <span class="k">as</span> <span class="nn">ltorch</span>
+<span class="kn">from</span> <span class="nn">thunder.core.devices</span> <span class="kn">import</span> <span class="n">DeviceType</span>
+<span class="kn">from</span> <span class="nn">thunder.core.proxies</span> <span class="kn">import</span> <span class="n">TensorProxy</span>
+<span class="kn">from</span> <span class="nn">thunder.core.transforms</span> <span class="kn">import</span> <span class="n">grad</span><span class="p">,</span> <span class="n">put_grads</span><span class="p">,</span> <span class="n">get_grad</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">thunder.extend</span> <span class="kn">import</span> <span class="n">OperatorExecutor</span><span class="p">,</span> <span class="n">register_executor</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Registers a new operator executor</span>
+<span class="n">myex</span> <span class="o">=</span> <span class="n">OperatorExecutor</span><span class="p">(</span><span class="s2">&quot;myex&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;0.1&quot;</span><span class="p">)</span>
+<span class="n">register_executor</span><span class="p">(</span><span class="n">myex</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+myex
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Our operator executor will use the &quot;multimul&quot; function as a new example operator.</span>
+<span class="c1">#   This function uses NumPy to perform two multiplications of four inputs.</span>
+<span class="c1">#   This function&#39;s contrived, but will be useful to illustrate the extend submodule&#39;s capabilities.</span>
+<span class="k">def</span> <span class="nf">multimul_impl</span><span class="p">(</span>
+        <span class="n">a</span><span class="p">:</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">b</span><span class="p">:</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">c</span><span class="p">:</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+        <span class="n">d</span><span class="p">:</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can verify that multimul is a valid Python function that operates on PyTorch tensors -- at least PyTorch tensors on the CPU.</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">multimul_impl</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(tensor([[-0.3781, -0.0240],
+         [ 0.5177, -0.1470]]),
+ tensor([[-0.3781, -0.0240],
+         [ 0.5177, -0.1470]]))
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># To let thunder use multimul we need to define how it propagates metadata. This can be done by directly defining a &quot;meta function&quot;,</span>
+<span class="c1"># of by defining a traceable &quot;like&quot; function that describes what multimul does in terms of existing thunder operations.</span>
+<span class="c1">#   The &quot;like&quot; function can be used for metadata propagation AND transforming the new operator, as we&#39;ll see below.</span>
+<span class="c1">#   In this case, the &quot;like&quot; function just describes the two multiplications that multimul performs.</span>
+<span class="k">def</span> <span class="nf">multimul_like</span><span class="p">(</span>
+        <span class="n">a</span><span class="p">:</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">TensorProxy</span><span class="p">,</span>
+        <span class="n">b</span><span class="p">:</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">TensorProxy</span><span class="p">,</span>
+        <span class="n">c</span><span class="p">:</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">TensorProxy</span><span class="p">,</span>
+        <span class="n">d</span><span class="p">:</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">TensorProxy</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">*</span> <span class="n">d</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The &quot;register_operator&quot; method of operator executor&#39;s returns a &quot;Symbol&quot; object for multimul that can be called directly</span>
+<span class="c1">#   from compiled thunder code.</span>
+<span class="n">multimul</span> <span class="o">=</span> <span class="n">myex</span><span class="o">.</span><span class="n">register_operator</span><span class="p">(</span><span class="s1">&#39;multimul&#39;</span><span class="p">,</span> <span class="n">like</span><span class="o">=</span><span class="n">multimul_like</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">multimul_impl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example of calling the new multimul symbol</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">multimul</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+
+<span class="n">cfoo</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">executors</span><span class="o">=</span><span class="p">[</span><span class="n">myex</span><span class="p">])</span>
+<span class="n">cfoo</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(tensor([[-0.3781, -0.0240],
+         [ 0.5177, -0.1470]]),
+ tensor([[-0.3781, -0.0240],
+         [ 0.5177, -0.1470]]))
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The symbol is recorded, like other operations, into thunder&#39;s trace</span>
+<span class="n">thunder</span><span class="o">.</span><span class="n">last_traces</span><span class="p">(</span><span class="n">cfoo</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+# Constructed by Delete Last Used (took 0 milliseconds)
+import torch
+from thunder.executors.torchex import no_autocast
+
+@torch.no_grad()
+@no_autocast()
+def computation(t_0, t_1, t_2, t_3):
+  # t_0: &#34;cpu f32[2, 2]&#34;
+  # t_1: &#34;cpu f32[2, 2]&#34;
+  # t_2: &#34;cpu f32[2, 2]&#34;
+  # t_3: &#34;cpu f32[2, 2]&#34;
+  (t0, t1) = multimul(t_0, t_1, t_2, t_3)
+    # t0 = ltorch.mul(t_0, t_1)  # t0: &#34;cpu f32[2, 2]&#34;
+      # t0 = prims.mul(t_0, t_1)  # t0: &#34;cpu f32[2, 2]&#34;
+    # t1 = ltorch.mul(t_2, t_3)  # t1: &#34;cpu f32[2, 2]&#34;
+      # t1 = prims.mul(t_2, t_3)  # t1: &#34;cpu f32[2, 2]&#34;
+  del t_0, t_1, t_2, t_3
+  return (t0, t1)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># multimul is even differentiable because its &quot;like&quot; function is differentiable</span>
+<span class="n">a</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">cfoo_grad</span> <span class="o">=</span> <span class="n">grad</span><span class="p">(</span><span class="n">cfoo</span><span class="p">)</span>
+<span class="n">cfoo_grad</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">thunder</span><span class="o">.</span><span class="n">last_traces</span><span class="p">(</span><span class="n">cfoo_grad</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">a</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+# Constructed by Delete Last Used (took 0 milliseconds)
+import torch
+from thunder.executors.torchex import no_autocast
+
+@torch.no_grad()
+@no_autocast()
+def computation(t_0, t_1, t_2, t_3):
+  # t_1: &#34;cpu f32[2, 2]&#34;
+  t8 = torch.full((2, 2), 1.0, device=torch.device(&#34;cpu&#34;), dtype=torch.float32)  # t8: &#34;cpu f32[2, 2]&#34;
+    # t8 = ltorch.full((2, 2), 1.0, device=torch.device(&#34;cpu&#34;), dtype=torch.float32)  # t8: &#34;cpu f32[2, 2]&#34;
+      # t8 = prims.full((2, 2), 1.0, device=devices.Device(&#34;cpu&#34;), dtype=dtypes.float32)  # t8: &#34;cpu f32[2, 2]&#34;
+  t2 = torch.mul(t_1, t8)  # t2: &#34;cpu f32[2, 2]&#34;
+    # t2 = ltorch.mul(t_1, t8)  # t2: &#34;cpu f32[2, 2]&#34;
+      # t2 = prims.mul(t_1, t8)  # t2: &#34;cpu f32[2, 2]&#34;
+  del t_1
+  # t_0: &#34;cpu f32[2, 2]&#34;
+  t3 = torch.mul(t_0, t8)  # t3: &#34;cpu f32[2, 2]&#34;
+    # t3 = ltorch.mul(t_0, t8)  # t3: &#34;cpu f32[2, 2]&#34;
+      # t3 = prims.mul(t_0, t8)  # t3: &#34;cpu f32[2, 2]&#34;
+  del t_0, t8
+  # t_3: &#34;cpu f32[2, 2]&#34;
+  t9 = torch.full((2, 2), 1.0, device=torch.device(&#34;cpu&#34;), dtype=torch.float32)  # t9: &#34;cpu f32[2, 2]&#34;
+    # t9 = ltorch.full((2, 2), 1.0, device=torch.device(&#34;cpu&#34;), dtype=torch.float32)  # t9: &#34;cpu f32[2, 2]&#34;
+      # t9 = prims.full((2, 2), 1.0, device=devices.Device(&#34;cpu&#34;), dtype=dtypes.float32)  # t9: &#34;cpu f32[2, 2]&#34;
+  t6 = torch.mul(t_3, t9)  # t6: &#34;cpu f32[2, 2]&#34;
+    # t6 = ltorch.mul(t_3, t9)  # t6: &#34;cpu f32[2, 2]&#34;
+      # t6 = prims.mul(t_3, t9)  # t6: &#34;cpu f32[2, 2]&#34;
+  del t_3
+  # t_2: &#34;cpu f32[2, 2]&#34;
+  t7 = torch.mul(t_2, t9)  # t7: &#34;cpu f32[2, 2]&#34;
+    # t7 = ltorch.mul(t_2, t9)  # t7: &#34;cpu f32[2, 2]&#34;
+      # t7 = prims.mul(t_2, t9)  # t7: &#34;cpu f32[2, 2]&#34;
+  del t_2, t9
+  return [t2, t3, t6, t7]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+tensor([[-1.1229, -0.1863],
+        [ 2.2082, -0.6380]])
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can tell thunder to execute existing operations using multimul by defining a transform</span>
+<span class="c1">#   from them to multimul, and a &quot;checker&quot; function that returns True when the</span>
+<span class="c1">#   transform is valid and False otherwise.</span>
+
+<span class="c1"># We can translate mul to multimul by ignoring the second multiplication</span>
+<span class="k">def</span> <span class="nf">mul_to_multimul</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">TensorProxy</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">TensorProxy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorProxy</span><span class="p">:</span>
+    <span class="n">result</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">multimul</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="c1"># The &quot;checker&quot; function verifies that all inputs are CPU tensors or numbers, because NumPy</span>
+<span class="c1">#   can&#39;t handle other inputs</span>
+<span class="k">def</span> <span class="nf">mul_to_multimul_checker</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">TensorProxy</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">TensorProxy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">is_cpu</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">TensorProxy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">TensorProxy</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">devicetype</span> <span class="o">==</span> <span class="n">DeviceType</span><span class="o">.</span><span class="n">CPU</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">is_cpu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The &quot;register_implementation&quot; method describes how to translate mul to multimul</span>
+<span class="n">myex</span><span class="o">.</span><span class="n">register_implementation</span><span class="p">(</span><span class="n">ltorch</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">checker</span><span class="o">=</span><span class="n">mul_to_multimul_checker</span><span class="p">,</span> <span class="n">execution_transform</span><span class="o">=</span><span class="n">mul_to_multimul</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verifies the implementation of mul using multimul, and shows the execution transform</span>
+<span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">bar</span><span class="p">,</span> <span class="n">executors</span><span class="o">=</span><span class="p">[</span><span class="n">myex</span><span class="p">])</span>
+<span class="n">cbar</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">thunder</span><span class="o">.</span><span class="n">last_traces</span><span class="p">(</span><span class="n">cbar</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+# Constructed by Delete Last Used (took 0 milliseconds)
+import torch
+from thunder.executors.torchex import no_autocast
+
+@torch.no_grad()
+@no_autocast()
+def computation(t_0, t_1):
+  # t_0: &#34;cpu f32[2, 2]&#34;
+  # t_1: &#34;cpu f32[2, 2]&#34;
+  (t0, _) = multimul(t_0, t_1, 0, 0)
+    # t0 = ltorch.mul(t_0, t_1)  # t0: &#34;cpu f32[2, 2]&#34;
+      # t0 = prims.mul(t_0, t_1)  # t0: &#34;cpu f32[2, 2]&#34;
+  del t_0, t_1
+  return t0
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Execution transforms happen AFTER semantic transforms like grad, so even when computing the grad</span>
+<span class="c1">#   of mul (which involves two multiplications to compute the grad) we still see multimul in the</span>
+<span class="c1">#   execution trace</span>
+<span class="n">a</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">cbar_grad</span> <span class="o">=</span> <span class="n">grad</span><span class="p">(</span><span class="n">cbar</span><span class="p">)</span>
+<span class="n">cbar_grad</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">thunder</span><span class="o">.</span><span class="n">last_traces</span><span class="p">(</span><span class="n">cbar_grad</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+# Constructed by Delete Last Used (took 0 milliseconds)
+import torch
+from thunder.executors.torchex import no_autocast
+
+@torch.no_grad()
+@no_autocast()
+def computation(t_0, t_1):
+  # t_1: &#34;cpu f32[2, 2]&#34;
+  t4 = torch.full((2, 2), 1.0, device=torch.device(&#34;cpu&#34;), dtype=torch.float32)  # t4: &#34;cpu f32[2, 2]&#34;
+    # t4 = ltorch.full((2, 2), 1.0, device=torch.device(&#34;cpu&#34;), dtype=torch.float32)  # t4: &#34;cpu f32[2, 2]&#34;
+      # t4 = prims.full((2, 2), 1.0, device=devices.Device(&#34;cpu&#34;), dtype=dtypes.float32)  # t4: &#34;cpu f32[2, 2]&#34;
+  (t2, _) = multimul(t_1, t4, 0, 0)
+    # t2 = ltorch.mul(t_1, t4)  # t2: &#34;cpu f32[2, 2]&#34;
+      # t2 = prims.mul(t_1, t4)  # t2: &#34;cpu f32[2, 2]&#34;
+  del t_1
+  # t_0: &#34;cpu f32[2, 2]&#34;
+  (t3, _) = multimul(t_0, t4, 0, 0)
+    # t3 = ltorch.mul(t_0, t4)  # t3: &#34;cpu f32[2, 2]&#34;
+      # t3 = prims.mul(t_0, t4)  # t3: &#34;cpu f32[2, 2]&#34;
+  del t_0, t4
+  return [t2, t3]
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># In the above grad trace there are two multimuls, and both ignore one of their multiplications.</span>
+<span class="c1">#   It would be more efficient to perform just one multimul, and we can make this happen</span>
+<span class="c1">#   by defining a new grad transform for mul that calls multimul once.</span>
+<span class="c1">#   thunder&#39;s grad transforms are defined in a novel way that&#39;s not the focus of this notebook,</span>
+<span class="c1">#   but below we define the grad transform to use multimul.</span>
+<span class="k">def</span> <span class="nf">mymul_grad</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">TensorProxy</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">TensorProxy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorProxy</span><span class="p">:</span>
+    <span class="n">fwd</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">get_grad</span><span class="p">(</span><span class="n">fwd</span><span class="p">)</span>
+    <span class="n">a_grad</span><span class="p">,</span> <span class="n">b_grad</span> <span class="o">=</span> <span class="n">multimul</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+    <span class="n">put_grads</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="p">(</span><span class="n">a_grad</span><span class="p">,</span> <span class="n">b_grad</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">fwd</span>
+
+<span class="c1"># Re-registers the implementation, including the execution transform and now a grad transform</span>
+<span class="n">myex</span><span class="o">.</span><span class="n">register_implementation</span><span class="p">(</span><span class="n">ltorch</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">checker</span><span class="o">=</span><span class="n">mul_to_multimul_checker</span><span class="p">,</span> <span class="n">execution_transform</span><span class="o">=</span><span class="n">mul_to_multimul</span><span class="p">,</span> <span class="n">grad_transform</span><span class="o">=</span><span class="n">mymul_grad</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verifies our new grad transform is used and that a single multimul call is made</span>
+<span class="n">cbar_grad</span> <span class="o">=</span> <span class="n">grad</span><span class="p">(</span><span class="n">cbar</span><span class="p">)</span>
+<span class="n">cbar_grad</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">thunder</span><span class="o">.</span><span class="n">last_traces</span><span class="p">(</span><span class="n">cbar_grad</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+# Constructed by Delete Last Used (took 0 milliseconds)
+import torch
+from thunder.executors.torchex import no_autocast
+
+@torch.no_grad()
+@no_autocast()
+def computation(t_0, t_1):
+  # t_0: &#34;cpu f32[2, 2]&#34;
+  t4 = torch.full((2, 2), 1.0, device=torch.device(&#34;cpu&#34;), dtype=torch.float32)  # t4: &#34;cpu f32[2, 2]&#34;
+    # t4 = ltorch.full((2, 2), 1.0, device=torch.device(&#34;cpu&#34;), dtype=torch.float32)  # t4: &#34;cpu f32[2, 2]&#34;
+      # t4 = prims.full((2, 2), 1.0, device=devices.Device(&#34;cpu&#34;), dtype=dtypes.float32)  # t4: &#34;cpu f32[2, 2]&#34;
+  # t_1: &#34;cpu f32[2, 2]&#34;
+  (t2, t3) = multimul(t_1, t4, t_0, t4)
+    # t2 = ltorch.mul(t_1, t4)  # t2: &#34;cpu f32[2, 2]&#34;
+      # t2 = prims.mul(t_1, t4)  # t2: &#34;cpu f32[2, 2]&#34;
+    # t3 = ltorch.mul(t_0, t4)  # t3: &#34;cpu f32[2, 2]&#34;
+      # t3 = prims.mul(t_0, t4)  # t3: &#34;cpu f32[2, 2]&#34;
+  del t_1, t4, t_0
+  return [t2, t3]
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Some operations may require inputs have particular properties (like be contiguous), or a transform may wish</span>
+<span class="c1">#   to interleave torch operations with new operations. The transform function supports this. Here</span>
+<span class="c1">#   we can see an example where the inputs to multimul are made contiguous before it&#39;s called</span>
+<span class="k">def</span> <span class="nf">mul_to_contiguous_multimul</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">TensorProxy</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Number</span> <span class="o">|</span> <span class="n">TensorProxy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorProxy</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
+    <span class="n">result</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">multimul</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="n">myex</span><span class="o">.</span><span class="n">register_implementation</span><span class="p">(</span><span class="n">ltorch</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">checker</span><span class="o">=</span><span class="n">mul_to_multimul_checker</span><span class="p">,</span> <span class="n">execution_transform</span><span class="o">=</span><span class="n">mul_to_contiguous_multimul</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Verifies the new &quot;prologue&quot; for multimul works as expected. Note that the contiguous operations are</span>
+<span class="c1">#   executed by PyTorch, and don&#39;t have to be executed by your executor</span>
+<span class="n">a</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">caz</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+<span class="n">ccaz</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">caz</span><span class="p">,</span> <span class="n">executors</span><span class="o">=</span><span class="p">[</span><span class="n">myex</span><span class="p">])</span>
+<span class="n">ccaz</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">thunder</span><span class="o">.</span><span class="n">last_traces</span><span class="p">(</span><span class="n">ccaz</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+# Constructed by Delete Last Used (took 0 milliseconds)
+from torch import Tensor
+import torch
+from thunder.executors.torchex import no_autocast
+
+@torch.no_grad()
+@no_autocast()
+def computation(t_0, t_1):
+  # t_0: &#34;cpu f32[2, 2]&#34;
+  # t_1: &#34;cpu f32[2, 2]&#34;
+  t1 = Tensor.contiguous(t_0, memory_format=_torch_memory_format_0)  # t1: &#34;cpu f32[2, 2]&#34;
+    # t1 = ltorch.contiguous(t_0, memory_format=_torch_memory_format_0)  # t1: &#34;cpu f32[2, 2]&#34;
+      # t1 = prims.stride_order(t_0, (1, 0))  # t1: &#34;cpu f32[2, 2]&#34;
+  del t_0
+  t2 = Tensor.contiguous(t_1, memory_format=_torch_memory_format_0)  # t2: &#34;cpu f32[2, 2]&#34;
+    # t2 = ltorch.contiguous(t_1, memory_format=_torch_memory_format_0)  # t2: &#34;cpu f32[2, 2]&#34;
+      # t2 = prims.stride_order(t_1, (1, 0))  # t2: &#34;cpu f32[2, 2]&#34;
+  del t_1
+  (t0, _) = multimul(t1, t2, 0, 0)
+    # t0 = ltorch.mul(t1, t2)  # t0: &#34;cpu f32[2, 2]&#34;
+      # t0 = prims.mul(t1, t2)  # t0: &#34;cpu f32[2, 2]&#34;
+  del t1, t2
+  return t0
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># NVIDIA&#39;s APEX cross-entropy executor is a good example of a real-world operator executor. It defines</span>
+<span class="c1">#   fast forward and backward functions for torch.nn.functional.cross_entropy. We can see its custom</span>
+<span class="c1">#   fwd and bwd operations below</span>
+<span class="c1"># NOTE This cell and the following cells require the apex executor be installed to run properly</span>
+<span class="n">dtype</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">float32</span>
+<span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cuda&#39;</span>
+<span class="n">logits</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">([</span><span class="mi">2048</span><span class="p">,</span> <span class="mi">50257</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">ltorch</span><span class="o">.</span><span class="n">to_torch_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50257</span><span class="p">,</span> <span class="p">[</span><span class="mi">2048</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">thunder.executors.apex_entropyex</span> <span class="kn">import</span> <span class="n">apex_ex</span>
+
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">reduction</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cfoo</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">executors</span><span class="o">=</span><span class="p">[</span><span class="n">apex_ex</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Shows the forward operation</span>
+<span class="n">cfoo</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+<span class="n">thunder</span><span class="o">.</span><span class="n">last_traces</span><span class="p">(</span><span class="n">cfoo</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+# Constructed by Delete Last Used (took 0 milliseconds)
+import torch
+from thunder.executors.torchex import no_autocast
+
+@torch.no_grad()
+@no_autocast()
+def computation(t_0, t_1):
+  # t_0: &#34;cuda:0 f32[2048, 50257]&#34;
+  # t_1: &#34;cuda:0 i64[2048]&#34;
+  (t18, _) = apex_cross_entropy(t_0, t_1, &#39;mean&#39;, 0.0)
+  del t_0, t_1
+  return t18
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Shows APEX&#39;s custom forward and backward operations, plus additional PyTorch operations between the two</span>
+<span class="n">logits</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">cfoo_grad</span> <span class="o">=</span> <span class="n">grad</span><span class="p">(</span><span class="n">cfoo</span><span class="p">)</span>
+
+<span class="n">cfoo_grad</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+<span class="n">thunder</span><span class="o">.</span><span class="n">last_traces</span><span class="p">(</span><span class="n">cfoo_grad</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+# Constructed by Delete Last Used (took 0 milliseconds)
+from torch import Tensor
+import torch
+from thunder.executors.torchex import no_autocast
+
+@torch.no_grad()
+@no_autocast()
+def computation(t_0, t_1):
+  # t_0: &#34;cuda:0 f32[2048, 50257]&#34;
+  # t_1: &#34;cuda:0 i64[2048]&#34;
+  (_, t1) = apex_cross_entropy(t_0, t_1, &#39;mean&#39;, 0.0)
+  t6 = Tensor.contiguous(t_0, memory_format=_torch_memory_format_0)  # t6: &#34;cuda:0 f32[2048, 50257]&#34;
+    # t6 = ltorch.contiguous(t_0, memory_format=_torch_memory_format_0)  # t6: &#34;cuda:0 f32[2048, 50257]&#34;
+      # t6 = prims.stride_order(t_0, (1, 0))  # t6: &#34;cuda:0 f32[2048, 50257]&#34;
+  del t_0
+  t8 = torch.full((), 1.0, device=torch.device(&#34;cuda:0&#34;), dtype=torch.float32)  # t8: &#34;cuda:0 f32[]&#34;
+    # t8 = ltorch.full((), 1.0, device=torch.device(&#34;cuda:0&#34;), dtype=torch.float32)  # t8: &#34;cuda:0 f32[]&#34;
+      # t8 = prims.full((), 1.0, device=devices.Device(&#34;cuda:0&#34;), dtype=dtypes.float32)  # t8: &#34;cuda:0 f32[]&#34;
+  t12 = torch.unsqueeze(t8, 0)  # t12: &#34;cuda:0 f32[1]&#34;
+    # t12 = ltorch.unsqueeze(t8, 0)  # t12: &#34;cuda:0 f32[1]&#34;
+      # t12 = prims.broadcast_in_dim(t8, [1], [])  # t12: &#34;cuda:0 f32[1]&#34;
+  del t8
+  t3 = Tensor.expand(t12, [1])  # t3: &#34;cuda:0 f32[1]&#34;
+    # t3 = ltorch.expand(t12, [1])  # t3: &#34;cuda:0 f32[1]&#34;
+      # t3 = prims.broadcast_in_dim(t12, (1,), (0,))  # t3: &#34;cuda:0 f32[1]&#34;
+  del t12
+  t4 = Tensor.expand(t3, (2048,))  # t4: &#34;cuda:0 f32[2048]&#34;
+    # t4 = ltorch.expand(t3, (2048,))  # t4: &#34;cuda:0 f32[2048]&#34;
+      # t4 = prims.broadcast_in_dim(t3, (2048,), (0,))  # t4: &#34;cuda:0 f32[2048]&#34;
+  del t3
+  t5 = torch.mul(t4, 0.00048828125)  # t5: &#34;cuda:0 f32[2048]&#34;
+    # t5 = ltorch.mul(t4, 0.00048828125)  # t5: &#34;cuda:0 f32[2048]&#34;
+      # t5 = prims.mul(t4, 0.00048828125)  # t5: &#34;cuda:0 f32[2048]&#34;
+  del t4
+  t7 = apex_cross_entropy_backward(t5, t6, target=t_1, max_log_sum_exp=t1, label_smoothing=0.0)  # t7: &#34;cuda:0 f32[2048, 50257]&#34;
+  del t5, t6, t1, t_1
+  return [t7]
+</pre></div></div>
+</div>
+</section>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../reference/thunder.html" class="btn btn-neutral float-right" title="thunder" accesskey="n" rel="next">Next <img src="../../_static/images/chevron-right-orange.svg" class="next-page"></a>
+      
+      
+        <a href="../adding_custom_operator_backward.html" class="btn btn-neutral" title="Defining custom forward and backward for existing operators" accesskey="p" rel="prev"><img src="../../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+      
+    </div>
+  
+
+  
+
+    <hr>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2024 Lightning-AI et al.
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">Extending Thunder</a></li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+         <script src="../../_static/jquery.js"></script>
+         <script src="../../_static/underscore.js"></script>
+         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+         <script src="../../_static/doctools.js"></script>
+         <script src="../../_static/sphinx_highlight.js"></script>
+         <script src="../../_static/clipboard.min.js"></script>
+         <script src="../../_static/copybutton.js"></script>
+         <script src="../../_static/copybutton.js"></script>
+         <script>let toggleHintShow = 'Click to show';</script>
+         <script>let toggleHintHide = 'Click to hide';</script>
+         <script>let toggleOpenOnPrint = 'true';</script>
+         <script src="../../_static/togglebutton.js"></script>
+         <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+     
+
+  
+
+  <script type="text/javascript" src="../../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../../_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <!-- <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources"> -->
+    <!-- <div class="container"> -->
+      <!-- <div class="row"> -->
+        <!--
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://lightning-thunder.rtfd.io/en/latest">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://lightning-thunder.readthedocs.io/en/latest/#tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://lightning-thunder.readthedocs.io/en/latest/#community-examples">View Resources</a>
+        </div>
+        -->
+      <!-- </div> -->
+    <!-- </div> -->
+  <!-- </div> -->
+
+  <!--
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://lightning-thunder.rtfd.io/en/latest/" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://lightning-thunder.rtfd.io/en/latest/">PyTorch</a></li>
+            <li><a href="https://lightning-thunder.readthedocs.io/en/latest/introduction_guide.html">Get Started</a></li>
+            <li><a href="https://lightning-thunder.rtfd.io/en/latest/">Features</a></li>
+            <li><a href="">Ecosystem</a></li>
+            <li><a href="https://www.Lightning-AI.ai/blog">Blog</a></li>
+            <li><a href="https://github.com/Lightning-AI/lightning-thunder/blob/master/CONTRIBUTING.md">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://lightning-thunder.readthedocs.io/en/latest/#community-examples">Resources</a></li>
+            <li><a href="https://lightning-thunder.readthedocs.io/en/latest/#tutorials">Tutorials</a></li>
+            <li><a href="https://lightning-thunder.rtfd.io/en/latest">Docs</a></li>
+            <li><a href="https://pytorch-lightning.slack.com" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/Lightning-AI/lightning-thunder/issues" target="_blank">Github Issues</a></li>
+            <li><a href="" target="_blank">Brand Guidelines</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Stay Connected</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com/LightningAI" target="_blank" class="twitter"></a>
+            <a href="" target="_blank" class="youtube"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  -->
+
+  <div class="cookie-banner-wrapper">
+  <div class="container">
+    <p class="gdpr-notice">To analyze traffic and optimize your experience, we serve cookies on this site. By clicking or navigating, you agree to allow our usage of cookies. Read PyTorch Lightning's <a href="https://pytorchlightning.ai/privacy-policy">Privacy Policy</a>.</p>
+    <img class="close-button" src="../../_static/images/pytorch-x.svg">
+  </div>
+</div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://lightning-thunder.rtfd.io/en/latest/" aria-label="PyTorch Lightning"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://lightning-thunder.readthedocs.io/en/latest/introduction_guide.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://www.Lightning-AI.ai/blog">Blog</a>
+          </li>
+
+          <li class="resources-mobile-menu-title">
+            Ecosystem
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/stable/">PyTorch Lightning</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/fabric/stable/">Lightning Fabric</a>
+            </li>
+
+            <li>
+              <a href="https://torchmetrics.readthedocs.io/en/stable/">TorchMetrics</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/fabric/stable/">Fabric</a>
+            </li>
+          </ul>
+
+          <!--<li class="resources-mobile-menu-title">
+            Resources
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://lightning-thunder.readthedocs.io/en/latest/#community-examples">Developer Resources</a>
+            </li>
+
+            <li>
+              <a href="https://lightning-thunder.rtfd.io/en/latest/">About</a>
+            </li>
+
+            <li>
+              <a href="">Models (Beta)</a>
+            </li>
+
+            <li>
+              <a href="">Community</a>
+            </li>
+
+            <li>
+              <a href="">Forums</a>
+            </li>
+          </ul>-->
+
+          <li>
+            <a href="https://github.com/Lightning-AI/lightning-thunder">Github</a>
+          </li>
+
+          <li>
+            <a href="https://www.lightning.ai/">Lightning.ai</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQBQ3CV"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+ </body>
+</html>

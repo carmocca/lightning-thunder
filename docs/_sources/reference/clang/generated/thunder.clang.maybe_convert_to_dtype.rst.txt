@@ -1,0 +1,6 @@
+﻿thunder.clang.maybe\_convert\_to\_dtype
+=======================================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: maybe_convert_to_dtype

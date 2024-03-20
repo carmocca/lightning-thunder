@@ -1,0 +1,6 @@
+﻿thunder.clang.add
+=================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: add

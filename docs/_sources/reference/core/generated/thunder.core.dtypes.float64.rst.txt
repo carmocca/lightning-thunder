@@ -1,0 +1,6 @@
+﻿thunder.core.dtypes.float64
+===========================
+
+.. currentmodule:: thunder.core.dtypes
+
+.. autodata:: float64

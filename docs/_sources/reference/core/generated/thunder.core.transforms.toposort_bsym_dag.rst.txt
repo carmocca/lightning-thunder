@@ -1,0 +1,6 @@
+﻿thunder.core.transforms.toposort\_bsym\_dag
+===========================================
+
+.. currentmodule:: thunder.core.transforms
+
+.. autofunction:: toposort_bsym_dag

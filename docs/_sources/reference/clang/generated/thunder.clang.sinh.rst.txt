@@ -1,0 +1,6 @@
+﻿thunder.clang.sinh
+==================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: sinh

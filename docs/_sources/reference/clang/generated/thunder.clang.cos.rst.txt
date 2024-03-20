@@ -1,0 +1,6 @@
+﻿thunder.clang.cos
+=================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: cos

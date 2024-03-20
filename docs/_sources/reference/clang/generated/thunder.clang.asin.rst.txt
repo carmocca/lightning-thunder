@@ -1,0 +1,6 @@
+﻿thunder.clang.asin
+==================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: asin

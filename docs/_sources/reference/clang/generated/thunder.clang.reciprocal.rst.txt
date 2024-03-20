@@ -1,0 +1,6 @@
+﻿thunder.clang.reciprocal
+========================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: reciprocal

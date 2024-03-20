@@ -1,0 +1,6 @@
+﻿thunder.clang.expand
+====================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: expand

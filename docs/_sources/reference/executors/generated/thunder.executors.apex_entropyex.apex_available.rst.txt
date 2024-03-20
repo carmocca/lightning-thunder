@@ -1,0 +1,6 @@
+﻿thunder.executors.apex\_entropyex.apex\_available
+=================================================
+
+.. currentmodule:: thunder.executors.apex_entropyex
+
+.. autofunction:: apex_available

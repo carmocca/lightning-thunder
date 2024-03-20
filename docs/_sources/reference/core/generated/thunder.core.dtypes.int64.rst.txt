@@ -1,0 +1,6 @@
+﻿thunder.core.dtypes.int64
+=========================
+
+.. currentmodule:: thunder.core.dtypes
+
+.. autodata:: int64

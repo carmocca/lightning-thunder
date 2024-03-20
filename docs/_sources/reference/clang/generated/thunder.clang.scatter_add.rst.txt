@@ -1,0 +1,6 @@
+﻿thunder.clang.scatter\_add
+==========================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: scatter_add

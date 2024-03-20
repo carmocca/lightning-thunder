@@ -1,0 +1,6 @@
+﻿thunder.clang.unsqueeze
+=======================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: unsqueeze

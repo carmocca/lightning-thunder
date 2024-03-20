@@ -1,0 +1,6 @@
+﻿thunder.clang.full\_like
+========================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: full_like

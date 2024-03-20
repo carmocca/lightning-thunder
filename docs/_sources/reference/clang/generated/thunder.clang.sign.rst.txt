@@ -1,0 +1,6 @@
+﻿thunder.clang.sign
+==================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: sign

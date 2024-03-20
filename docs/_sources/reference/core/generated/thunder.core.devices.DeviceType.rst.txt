@@ -1,0 +1,23 @@
+﻿thunder.core.devices.DeviceType
+===============================
+
+.. currentmodule:: thunder.core.devices
+
+.. autoclass:: DeviceType
+
+   
+   .. automethod:: __init__
+
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~DeviceType.CPU
+      ~DeviceType.CUDA
+   
+   

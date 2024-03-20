@@ -1,0 +1,6 @@
+﻿thunder.core.proxies.is\_proxyable
+==================================
+
+.. currentmodule:: thunder.core.proxies
+
+.. autofunction:: is_proxyable

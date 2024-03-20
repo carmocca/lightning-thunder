@@ -1,0 +1,6 @@
+﻿thunder.clang.bitwise\_or
+=========================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: bitwise_or

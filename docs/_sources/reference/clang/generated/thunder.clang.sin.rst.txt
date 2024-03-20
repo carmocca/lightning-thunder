@@ -1,0 +1,6 @@
+﻿thunder.clang.sin
+=================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: sin

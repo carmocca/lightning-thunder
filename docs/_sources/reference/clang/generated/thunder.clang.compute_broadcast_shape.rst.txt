@@ -1,0 +1,6 @@
+﻿thunder.clang.compute\_broadcast\_shape
+=======================================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: compute_broadcast_shape

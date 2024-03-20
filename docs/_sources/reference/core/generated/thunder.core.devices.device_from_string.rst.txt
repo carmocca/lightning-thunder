@@ -1,0 +1,6 @@
+﻿thunder.core.devices.device\_from\_string
+=========================================
+
+.. currentmodule:: thunder.core.devices
+
+.. autofunction:: device_from_string

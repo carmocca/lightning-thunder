@@ -1,0 +1,6 @@
+﻿thunder.clang.take
+==================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: take

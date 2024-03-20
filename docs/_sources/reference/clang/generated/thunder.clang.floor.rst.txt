@@ -1,0 +1,6 @@
+﻿thunder.clang.floor
+===================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: floor

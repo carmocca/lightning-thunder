@@ -1,0 +1,6 @@
+﻿thunder.clang.nextafter
+=======================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: nextafter

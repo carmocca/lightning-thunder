@@ -1,0 +1,6 @@
+﻿thunder.clang.where
+===================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: where

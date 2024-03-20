@@ -1,0 +1,6 @@
+﻿thunder.clang.index\_add
+========================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: index_add

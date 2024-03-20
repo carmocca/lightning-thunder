@@ -1,0 +1,6 @@
+﻿thunder.core.transforms.bsym\_list\_to\_dag
+===========================================
+
+.. currentmodule:: thunder.core.transforms
+
+.. autofunction:: bsym_list_to_dag

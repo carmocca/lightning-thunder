@@ -1,0 +1,6 @@
+﻿thunder.core.dtypes.bool8
+=========================
+
+.. currentmodule:: thunder.core.dtypes
+
+.. autodata:: bool8

@@ -1,0 +1,6 @@
+﻿thunder.clang.trunc
+===================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: trunc

@@ -1,0 +1,6 @@
+﻿thunder.core.dtypes.float32
+===========================
+
+.. currentmodule:: thunder.core.dtypes
+
+.. autodata:: float32

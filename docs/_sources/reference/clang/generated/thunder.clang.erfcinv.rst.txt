@@ -1,0 +1,6 @@
+﻿thunder.clang.erfcinv
+=====================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: erfcinv

@@ -1,0 +1,6 @@
+﻿thunder.clang.erf
+=================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: erf

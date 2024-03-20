@@ -1,0 +1,6 @@
+﻿thunder.clang.slice\_in\_dim
+============================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: slice_in_dim

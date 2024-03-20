@@ -1,0 +1,6 @@
+﻿thunder.last\_interpreted\_history
+==================================
+
+.. currentmodule:: thunder
+
+.. autofunction:: last_interpreted_history

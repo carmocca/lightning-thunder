@@ -1,0 +1,6 @@
+﻿thunder.core.transforms.visitor\_transform
+==========================================
+
+.. currentmodule:: thunder.core.transforms
+
+.. autofunction:: visitor_transform

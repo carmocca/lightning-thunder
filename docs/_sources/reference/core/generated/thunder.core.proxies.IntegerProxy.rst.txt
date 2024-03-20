@@ -1,0 +1,41 @@
+﻿thunder.core.proxies.IntegerProxy
+=================================
+
+.. currentmodule:: thunder.core.proxies
+
+.. autoclass:: IntegerProxy
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~IntegerProxy.__init__
+      ~IntegerProxy.as_integer_ratio
+      ~IntegerProxy.bit_count
+      ~IntegerProxy.bit_length
+      ~IntegerProxy.conjugate
+      ~IntegerProxy.from_bytes
+      ~IntegerProxy.known_value
+      ~IntegerProxy.replace_name
+      ~IntegerProxy.to_bytes
+      ~IntegerProxy.type_string
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~IntegerProxy.denominator
+      ~IntegerProxy.imag
+      ~IntegerProxy.name
+      ~IntegerProxy.numerator
+      ~IntegerProxy.real
+   
+   

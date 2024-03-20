@@ -1,0 +1,6 @@
+﻿thunder.last\_traces
+====================
+
+.. currentmodule:: thunder
+
+.. autofunction:: last_traces

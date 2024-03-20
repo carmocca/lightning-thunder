@@ -1,0 +1,23 @@
+﻿thunder.core.codeutils.SigInfo
+==============================
+
+.. currentmodule:: thunder.core.codeutils
+
+.. autoclass:: SigInfo
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SigInfo.__init__
+      ~SigInfo.prettyprint
+   
+   
+
+   
+   
+   

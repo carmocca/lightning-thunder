@@ -1,0 +1,6 @@
+﻿thunder.core.baseutils.check\_type
+==================================
+
+.. currentmodule:: thunder.core.baseutils
+
+.. autofunction:: check_type

@@ -1,0 +1,6 @@
+﻿thunder.clang.transpose
+=======================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: transpose

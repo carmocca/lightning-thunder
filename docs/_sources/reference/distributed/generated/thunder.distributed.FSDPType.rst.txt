@@ -1,0 +1,23 @@
+﻿thunder.distributed.FSDPType
+============================
+
+.. currentmodule:: thunder.distributed
+
+.. autoclass:: FSDPType
+
+   
+   .. automethod:: __init__
+
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~FSDPType.ZERO2
+      ~FSDPType.ZERO3
+   
+   

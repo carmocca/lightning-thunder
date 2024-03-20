@@ -1,0 +1,6 @@
+﻿thunder.clang.floor\_divide
+===========================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: floor_divide

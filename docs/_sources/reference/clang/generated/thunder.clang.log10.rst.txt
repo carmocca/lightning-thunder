@@ -1,0 +1,6 @@
+﻿thunder.clang.log10
+===================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: log10

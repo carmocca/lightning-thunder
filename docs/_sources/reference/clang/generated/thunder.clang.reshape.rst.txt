@@ -1,0 +1,6 @@
+﻿thunder.clang.reshape
+=====================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: reshape

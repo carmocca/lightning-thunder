@@ -1,0 +1,6 @@
+﻿thunder.executors.passes.del\_last\_used
+========================================
+
+.. currentmodule:: thunder.executors.passes
+
+.. autofunction:: del_last_used

@@ -1,0 +1,6 @@
+﻿thunder.clang.tanh
+==================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: tanh

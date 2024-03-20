@@ -1,0 +1,6 @@
+﻿thunder.clang.log2
+==================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: log2

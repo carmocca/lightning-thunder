@@ -1,0 +1,6 @@
+﻿thunder.clang.movedim
+=====================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: movedim

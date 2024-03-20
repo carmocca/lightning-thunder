@@ -1,0 +1,6 @@
+﻿thunder.core.baseutils.check
+============================
+
+.. currentmodule:: thunder.core.baseutils
+
+.. autofunction:: check

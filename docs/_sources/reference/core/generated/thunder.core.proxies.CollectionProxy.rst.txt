@@ -1,0 +1,31 @@
+﻿thunder.core.proxies.CollectionProxy
+====================================
+
+.. currentmodule:: thunder.core.proxies
+
+.. autoclass:: CollectionProxy
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CollectionProxy.__init__
+      ~CollectionProxy.collection
+      ~CollectionProxy.replace_name
+      ~CollectionProxy.type_string
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~CollectionProxy.name
+   
+   

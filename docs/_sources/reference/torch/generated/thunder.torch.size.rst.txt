@@ -1,0 +1,6 @@
+﻿thunder.torch.size
+==================
+
+.. currentmodule:: thunder.torch
+
+.. autofunction:: size

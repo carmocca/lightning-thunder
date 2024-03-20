@@ -1,0 +1,6 @@
+﻿thunder.core.dtypes.complex64
+=============================
+
+.. currentmodule:: thunder.core.dtypes
+
+.. autodata:: complex64

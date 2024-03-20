@@ -1,0 +1,6 @@
+﻿thunder.clang.cat
+=================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: cat

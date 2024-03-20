@@ -1,0 +1,51 @@
+﻿thunder.core.symbol.BoundSymbol
+===============================
+
+.. currentmodule:: thunder.core.symbol
+
+.. autoclass:: BoundSymbol
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BoundSymbol.__init__
+      ~BoundSymbol.from_bsym
+      ~BoundSymbol.from_bsym_swap_proxies
+      ~BoundSymbol.gather_ctxs
+      ~BoundSymbol.has_input
+      ~BoundSymbol.import_ctx
+      ~BoundSymbol.name_with_module
+      ~BoundSymbol.object_ctx
+      ~BoundSymbol.python
+      ~BoundSymbol.rhs
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BoundSymbol.are_all_args_constant
+      ~BoundSymbol.flat_args
+      ~BoundSymbol.flat_args_and_spec
+      ~BoundSymbol.flat_outs
+      ~BoundSymbol.flat_outs_and_spec
+      ~BoundSymbol.flat_proxy_args
+      ~BoundSymbol.flat_proxy_outs
+      ~BoundSymbol.flat_variableified_proxy_args
+      ~BoundSymbol.flat_variableified_proxy_outs
+      ~BoundSymbol.header
+      ~BoundSymbol.subsymbols
+      ~BoundSymbol.sym
+      ~BoundSymbol.args
+      ~BoundSymbol.kwargs
+      ~BoundSymbol.output
+   
+   

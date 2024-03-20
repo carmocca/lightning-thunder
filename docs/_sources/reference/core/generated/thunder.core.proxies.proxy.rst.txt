@@ -1,0 +1,6 @@
+﻿thunder.core.proxies.proxy
+==========================
+
+.. currentmodule:: thunder.core.proxies
+
+.. autofunction:: proxy

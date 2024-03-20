@@ -1,0 +1,839 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-PQBQ3CV');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="google-site-verification" content="okUst94cAlWSsUsGZTB4xSS4UKTtRV8Nu5XZ9pdd3Aw" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Train a MLP on MNIST &mdash; lightning-thunder 0.1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/icon.svg"/>
+  
+  
+  
+    <link rel="canonical" href="https://github.com/Lightning-AI/lightning-thunder/basic/mlp_mnist.html"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/togglebutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Thunder functional jit" href="../notebooks/functional_jit.html" />
+    <link rel="prev" title="The sharp edges" href="sharp_edges.html" />
+  <!-- Google Analytics -->
+  
+  <!-- End Google Analytics -->
+  
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Light.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/UCity/UCity-Semibold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/Inconsolata/Inconsolata.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script defer src="https://use.fontawesome.com/releases/v6.1.1/js/all.js" integrity="sha384-xBXmu0dk1bEoiwd71wOonQLyH+VpgR1XcDH3rtxrLww5ajNTuMvBdL5SOiFZnNdp" crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="../_static/js/react/react.jsx" type="text/babel"></script>
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://lightning-thunder.rtfd.io/en/latest/" aria-label="PyTorch Lightning">
+      <!--  <img class="call-to-action-img" src="../_static/images/logo-lightning-icon.png"/> -->
+      </a>
+
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://lightning-thunder.readthedocs.io/en/latest/introduction_guide.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://www.Lightning-AI.ai/blog">Blog</a>
+          </li>
+
+          <li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-orange-arrow">
+                Docs
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning.ai/docs/pytorch/stable/">
+                  <span class="dropdown-title">PyTorch Lightning</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning.ai/docs/fabric/stable/">
+                  <span class="dropdown-title">Lightning Fabric</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://torchmetrics.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">TorchMetrics</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-flash.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Flash</span>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item" href="https://lightning-bolts.readthedocs.io/en/stable/">
+                  <span class="dropdown-title">Lightning Bolts</span>
+                </a>
+            </div>
+          </li>
+
+          <!--<li>
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a class="resource-option with-down-arrow">
+                Resources
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="nav-dropdown-item" href="">
+                  <span class="dropdown-title">Community</span>
+                  <p>Join the PyTorch developer community to contribute, learn, and get your questions answered.</p>
+                </a>
+                <a class="nav-dropdown-item" href="https://lightning-thunder.readthedocs.io/en/latest/#community-examples">
+                  <span class="dropdown-title">Developer Resources</span>
+                  <p>Find resources and get questions answered</p>
+                </a>
+                <a class="nav-dropdown-item" href="" target="_blank">
+                  <span class="dropdown-title">Forums</span>
+                  <p>A place to discuss PyTorch code, issues, install, research</p>
+                </a>
+                <a class="nav-dropdown-item" href="">
+                  <span class="dropdown-title">Models (Beta)</span>
+                  <p>Discover, publish, and reuse pre-trained models</p>
+                </a>
+              </div>
+            </div>
+          </li>-->
+
+          
+
+          <li>
+            <a href="https://github.com/Lightning-AI/lightning-thunder">GitHub</a>
+          </li>
+
+          <li>
+            <a href="https://www.lightning.ai/">Lightning AI</a>
+          </li>
+
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  0.1.0
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Home</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Welcome to ⚡ Lightning Thunder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fundamentals/installation.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fundamentals/hello_world.html">Hello World</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fundamentals/examine.html">Using examine</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Basic</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/zero_to_thunder.html">Zero to Thunder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inspecting_traces.html">Thunder step by step</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sharp_edges.html">The sharp edges</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Train a MLP on MNIST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/functional_jit.html">Functional jit</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Intermediate</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intermediate/additional_executors.html">Additional executors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intermediate/ddp.html">Distributed Data Parallel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intermediate/whats_next.html">What's next</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/dev_tutorials/fsdp_tutorial.html">FSDP Under the Hood Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Advanced</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/inside_thunder.html">Inside thunder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/extending.html">Extending thunder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/adding_custom_operator.html">Defining new Thunder operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/adding_custom_operator_backward.html">Defining custom forward and backward for existing operators</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Experimental dev tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/dev_tutorials/extend.html">Extending Thunder</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/thunder.html">thunder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/common/index.html">thunder.common</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/core/index.html">thunder.core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/clang/index.html">thunder.clang</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/examine/index.html">thunder.examine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/distributed/index.html">thunder.distributed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/executors/index.html">thunder.executors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/torch/index.html">thunder.torch</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../index.html">
+          
+            Docs
+          
+        </a> &gt;
+      </li>
+
+        
+      <li>Train a MLP on MNIST</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/basic/mlp_mnist.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <section id="train-a-mlp-on-mnist">
+<h1>Train a MLP on MNIST<a class="headerlink" href="#train-a-mlp-on-mnist" title="Permalink to this heading">¶</a></h1>
+<p>Here’s a complete program that trains a torchvision MLP on MNIST:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">pre</span> <span class="n">torchvision</span> <span class="o">--</span><span class="n">index</span><span class="o">-</span><span class="n">url</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">pytorch</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">whl</span><span class="o">/</span><span class="n">nightly</span><span class="o">/</span><span class="n">cu121</span>
+</pre></div>
+</div>
+<p>Here’s the code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torchvision</span>
+<span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
+<span class="kn">import</span> <span class="nn">thunder</span>
+
+<span class="c1"># Creates train and test datasets</span>
+<span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cuda&#39;</span>
+
+<span class="n">device_transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+<span class="n">flatten_transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+<span class="n">my_transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">((</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span> <span class="n">device_transform</span><span class="p">,</span> <span class="n">flatten_transform</span><span class="p">))</span>
+
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="s2">&quot;/tmp/mnist/train&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">my_transform</span><span class="p">)</span>
+<span class="n">test_dataset</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="s2">&quot;/tmp/mnist/test&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">my_transform</span><span class="p">)</span>
+
+<span class="c1"># Creates Samplers</span>
+<span class="n">train_sampler</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">RandomSampler</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">test_sampler</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">RandomSampler</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">)</span>
+
+<span class="c1"># Creates DataLoaders</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">train_sampler</span><span class="p">)</span>
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">test_sampler</span><span class="p">)</span>
+
+<span class="c1"># Evaluates the model</span>
+<span class="k">def</span> <span class="nf">eval_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">):</span>
+    <span class="n">num_correct</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total_guesses</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">targets</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">test_loader</span><span class="p">):</span>
+        <span class="n">targets</span> <span class="o">=</span> <span class="n">targets</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+        <span class="c1"># Acquires the model&#39;s best guesses at each class</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">best_guesses</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Updates number of correct and total guesses</span>
+        <span class="n">num_correct</span> <span class="o">+=</span> <span class="n">torch</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">best_guesses</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="n">total_guesses</span> <span class="o">+=</span> <span class="n">batch_size</span>
+    <span class="c1"># Prints output</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Correctly guessed &quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">num_correct</span><span class="o">/</span><span class="n">total_guesses</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">% o</span><span class="s2">f the dataset&quot;</span><span class="p">)</span>
+
+<span class="c1"># Trains the model</span>
+<span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">loss_fn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">data</span><span class="p">,</span> <span class="n">targets</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">train_loader</span><span class="p">):</span>
+            <span class="n">targets</span> <span class="o">=</span> <span class="n">targets</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+            <span class="c1"># Acquires the model&#39;s best guesses at each class</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="c1"># Computes loss</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+            <span class="c1"># Updates model</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+<span class="c1"># Constructs the model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">MLP</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">784</span><span class="p">,</span> <span class="n">hidden_channels</span><span class="o">=</span><span class="p">[</span><span class="mi">784</span><span class="p">,</span> <span class="mi">784</span><span class="p">,</span> <span class="mi">784</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">.1</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Performs an initial evaluation</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">jitted_eval_model</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">eval_model</span><span class="p">(</span><span class="n">jitted_eval_model</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">)</span>
+
+<span class="c1"># Trains the model</span>
+<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">jitted_train_model</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">train_model</span><span class="p">(</span><span class="n">jitted_train_model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Performs a final evaluation</span>
+<span class="n">eval_model</span><span class="p">(</span><span class="n">jitted_eval_model</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">)</span>
+
+<span class="c1"># Evaluates the original, unjitted model</span>
+<span class="c1"># The unjitted and jitted model share parameters, so it&#39;s</span>
+<span class="c1"># also updated</span>
+<span class="n">eval_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">)</span>
+
+<span class="c1"># Acquires and prints thunder&#39;s &quot;traces&quot;, which show what thunder executed</span>
+<span class="c1"># The training model has both &quot;forward&quot; and &quot;backward&quot; traces, corresponding</span>
+<span class="c1"># to its forward and backward computations.</span>
+<span class="c1"># The evaluation model has only one set of traces.</span>
+<span class="n">fwd_traces</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">last_traces</span><span class="p">(</span><span class="n">jitted_train_model</span><span class="p">)</span>
+<span class="n">bwd_traces</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">last_backward_traces</span><span class="p">(</span><span class="n">jitted_train_model</span><span class="p">)</span>
+<span class="n">eval_traces</span> <span class="o">=</span> <span class="n">thunder</span><span class="o">.</span><span class="n">last_traces</span><span class="p">(</span><span class="n">jitted_eval_model</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This is the trace that thunder executed for training&#39;s forward computation:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fwd_traces</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This is the trace that thunder executed for training&#39;s backward computation:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bwd_traces</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This is the trace that thunder executed for eval&#39;s computation:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">eval_traces</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Let’s look at a few parts of this program more closely.</p>
+<p>First, up until the call to <code class="docutils literal notranslate"><span class="pre">thunder.jit()</span></code> the program is just Python, PyTorch and torchvision. <code class="docutils literal notranslate"><span class="pre">thunder.jit()</span></code> accepts a PyTorch module (or function) and returns a Thunder-optimized module that has the same signature, parameters and buffers.</p>
+<p>After compilation the program is, again, just Python and PyTorch, until the very end. Behind the scenes, when a Thunder module is called it produces a “trace” representing the sequence of tensor operations to perform. This trace is then transformed and optimized, and the sequence of these traces for the last inputs can be acquired by calling <code class="docutils literal notranslate"><span class="pre">thunder.last_traces()</span></code> on the module (the traced program changes when different input data types, devices, or other properties are used). When the module is used for training, <code class="docutils literal notranslate"><span class="pre">thunder.last_traces()</span></code> will return both the sequence of “forward” traces and the sequence of “backward” traces, and when it’s just used for evaluation it will just return one sequence of traces. In this case we’re printing the last traces in the sequence, which print as Python programs, and these Python programs are what gets executed by Thunder.</p>
+<p>Let’s take a look at the execution trace for the training module’s forward:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+<span class="nd">@no_autocast</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">augmented_forward_fn</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">t4</span><span class="p">,</span> <span class="n">t5</span><span class="p">,</span> <span class="n">t21</span><span class="p">,</span> <span class="n">t22</span><span class="p">,</span> <span class="n">t38</span><span class="p">,</span> <span class="n">t39</span><span class="p">,</span> <span class="n">t55</span><span class="p">,</span> <span class="n">t56</span><span class="p">,</span> <span class="n">t72</span><span class="p">,</span> <span class="n">t73</span><span class="p">):</span>
+  <span class="c1"># t0</span>
+  <span class="c1"># t4</span>
+  <span class="c1"># t5</span>
+  <span class="c1"># t21</span>
+  <span class="c1"># t22</span>
+  <span class="c1"># t38</span>
+  <span class="c1"># t39</span>
+  <span class="c1"># t55</span>
+  <span class="c1"># t56</span>
+  <span class="c1"># t72</span>
+  <span class="c1"># t73</span>
+  <span class="n">t1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">t4</span><span class="p">,</span> <span class="n">t5</span><span class="p">)</span>  <span class="c1"># t1</span>
+    <span class="c1"># t1 = ltorch.linear(t0, t4, t5)  # t1</span>
+      <span class="c1"># t1 = prims.linear(t0, t4, t5)  # t1</span>
+  <span class="p">[</span><span class="n">t10</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t7</span><span class="p">]</span> <span class="o">=</span> <span class="n">nvFusion0</span><span class="p">(</span><span class="n">t1</span><span class="p">)</span>
+    <span class="c1"># t2 = prims.gt(t1, 0.0)  # t2</span>
+    <span class="c1"># t3 = prims.where(t2, t1, 0.0)  # t3</span>
+    <span class="c1"># t6 = prims.uniform((8, 784), 0.0, 1.0, device=devices.Device(&quot;cuda:0&quot;), dtype=dtypes.float32)  # t6</span>
+    <span class="c1"># t7 = prims.lt(t6, 0.9)  # t7</span>
+    <span class="c1"># t8 = prims.convert_element_type(t7, dtypes.float32)  # t8</span>
+    <span class="c1"># t9 = prims.mul(t3, t8)  # t9</span>
+    <span class="c1"># t10 = prims.mul(t9, 1.1111111111111112)  # t10</span>
+  <span class="k">del</span> <span class="n">t1</span>
+  <span class="n">t11</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">t10</span><span class="p">,</span> <span class="n">t21</span><span class="p">,</span> <span class="n">t22</span><span class="p">)</span>  <span class="c1"># t11</span>
+    <span class="c1"># t11 = ltorch.linear(t10, t21, t22)  # t11</span>
+      <span class="c1"># t11 = prims.linear(t10, t21, t22)  # t11</span>
+  <span class="p">[</span><span class="n">t12</span><span class="p">,</span> <span class="n">t15</span><span class="p">,</span> <span class="n">t18</span><span class="p">]</span> <span class="o">=</span> <span class="n">nvFusion1</span><span class="p">(</span><span class="n">t11</span><span class="p">)</span>
+    <span class="c1"># t12 = prims.gt(t11, 0.0)  # t12</span>
+    <span class="c1"># t13 = prims.where(t12, t11, 0.0)  # t13</span>
+    <span class="c1"># t14 = prims.uniform((8, 784), 0.0, 1.0, device=devices.Device(&quot;cuda:0&quot;), dtype=dtypes.float32)  # t14</span>
+    <span class="c1"># t15 = prims.lt(t14, 0.9)  # t15</span>
+    <span class="c1"># t16 = prims.convert_element_type(t15, dtypes.float32)  # t16</span>
+    <span class="c1"># t17 = prims.mul(t13, t16)  # t17</span>
+    <span class="c1"># t18 = prims.mul(t17, 1.1111111111111112)  # t18</span>
+  <span class="k">del</span> <span class="n">t11</span>
+  <span class="n">t19</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">t18</span><span class="p">,</span> <span class="n">t38</span><span class="p">,</span> <span class="n">t39</span><span class="p">)</span>  <span class="c1"># t19</span>
+    <span class="c1"># t19 = ltorch.linear(t18, t38, t39)  # t19</span>
+      <span class="c1"># t19 = prims.linear(t18, t38, t39)  # t19</span>
+  <span class="p">[</span><span class="n">t20</span><span class="p">,</span> <span class="n">t25</span><span class="p">,</span> <span class="n">t28</span><span class="p">]</span> <span class="o">=</span> <span class="n">nvFusion2</span><span class="p">(</span><span class="n">t19</span><span class="p">)</span>
+    <span class="c1"># t20 = prims.gt(t19, 0.0)  # t20</span>
+    <span class="c1"># t23 = prims.where(t20, t19, 0.0)  # t23</span>
+    <span class="c1"># t24 = prims.uniform((8, 784), 0.0, 1.0, device=devices.Device(&quot;cuda:0&quot;), dtype=dtypes.float32)  # t24</span>
+    <span class="c1"># t25 = prims.lt(t24, 0.9)  # t25</span>
+    <span class="c1"># t26 = prims.convert_element_type(t25, dtypes.float32)  # t26</span>
+    <span class="c1"># t27 = prims.mul(t23, t26)  # t27</span>
+    <span class="c1"># t28 = prims.mul(t27, 1.1111111111111112)  # t28</span>
+  <span class="k">del</span> <span class="n">t19</span>
+  <span class="n">t29</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">t28</span><span class="p">,</span> <span class="n">t55</span><span class="p">,</span> <span class="n">t56</span><span class="p">)</span>  <span class="c1"># t29</span>
+    <span class="c1"># t29 = ltorch.linear(t28, t55, t56)  # t29</span>
+      <span class="c1"># t29 = prims.linear(t28, t55, t56)  # t29</span>
+  <span class="p">[</span><span class="n">t30</span><span class="p">,</span> <span class="n">t33</span><span class="p">,</span> <span class="n">t36</span><span class="p">]</span> <span class="o">=</span> <span class="n">nvFusion3</span><span class="p">(</span><span class="n">t29</span><span class="p">)</span>
+    <span class="c1"># t30 = prims.gt(t29, 0.0)  # t30</span>
+    <span class="c1"># t31 = prims.where(t30, t29, 0.0)  # t31</span>
+    <span class="c1"># t32 = prims.uniform((8, 28), 0.0, 1.0, device=devices.Device(&quot;cuda:0&quot;), dtype=dtypes.float32)  # t32</span>
+    <span class="c1"># t33 = prims.lt(t32, 0.9)  # t33</span>
+    <span class="c1"># t34 = prims.convert_element_type(t33, dtypes.float32)  # t34</span>
+    <span class="c1"># t35 = prims.mul(t31, t34)  # t35</span>
+    <span class="c1"># t36 = prims.mul(t35, 1.1111111111111112)  # t36</span>
+  <span class="k">del</span> <span class="n">t29</span>
+  <span class="n">t37</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">t36</span><span class="p">,</span> <span class="n">t72</span><span class="p">,</span> <span class="n">t73</span><span class="p">)</span>  <span class="c1"># t37</span>
+    <span class="c1"># t37 = ltorch.linear(t36, t72, t73)  # t37</span>
+      <span class="c1"># t37 = prims.linear(t36, t72, t73)  # t37</span>
+  <span class="p">[</span><span class="n">t41</span><span class="p">,</span> <span class="n">t44</span><span class="p">]</span> <span class="o">=</span> <span class="n">nvFusion4</span><span class="p">(</span><span class="n">t37</span><span class="p">)</span>
+    <span class="c1"># t40 = prims.uniform((8, 10), 0.0, 1.0, device=devices.Device(&quot;cuda:0&quot;), dtype=dtypes.float32)  # t40</span>
+    <span class="c1"># t41 = prims.lt(t40, 0.9)  # t41</span>
+    <span class="c1"># t42 = prims.convert_element_type(t41, dtypes.float32)  # t42</span>
+    <span class="c1"># t43 = prims.mul(t37, t42)  # t43</span>
+    <span class="c1"># t44 = prims.mul(t43, 1.1111111111111112)  # t44</span>
+  <span class="k">del</span> <span class="n">t37</span>
+  <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">t44</span><span class="p">,</span> <span class="p">()),</span> <span class="s1">&#39;flat_args&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">t0</span><span class="p">,</span> <span class="n">t4</span><span class="p">,</span> <span class="n">t5</span><span class="p">,</span> <span class="n">t21</span><span class="p">,</span> <span class="n">t22</span><span class="p">,</span> <span class="n">t38</span><span class="p">,</span> <span class="n">t39</span><span class="p">,</span> <span class="n">t55</span><span class="p">,</span> <span class="n">t56</span><span class="p">,</span> <span class="n">t72</span><span class="p">,</span> <span class="n">t73</span><span class="p">],</span> <span class="s1">&#39;flat_output&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">t44</span><span class="p">,)},</span> <span class="p">((</span><span class="n">t0</span><span class="p">,</span> <span class="n">t10</span><span class="p">,</span> <span class="n">t12</span><span class="p">,</span> <span class="n">t15</span><span class="p">,</span> <span class="n">t18</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t20</span><span class="p">,</span> <span class="n">t21</span><span class="p">,</span> <span class="n">t25</span><span class="p">,</span> <span class="n">t28</span><span class="p">,</span> <span class="n">t30</span><span class="p">,</span> <span class="n">t33</span><span class="p">,</span> <span class="n">t36</span><span class="p">,</span> <span class="n">t38</span><span class="p">,</span> <span class="n">t41</span><span class="p">,</span> <span class="n">t55</span><span class="p">,</span> <span class="n">t7</span><span class="p">,</span> <span class="n">t72</span><span class="p">),</span> <span class="p">(</span><span class="mf">1.1111111111111112</span><span class="p">,</span> <span class="mf">1.1111111111111112</span><span class="p">,</span> <span class="mf">1.1111111111111112</span><span class="p">,</span> <span class="mf">1.1111111111111112</span><span class="p">,</span> <span class="mf">1.1111111111111112</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>There’s a lot going on here, and if you’d like to get into the details then keep reading! But we can see that the trace is a functional Python function, and Thunder has produced several groups of primitives that are sent to nvFuser. Instead of leaving these primitives directly in the module, nvFuser has produced several optimized kernels (fusions) and inserted them into the program (<code class="docutils literal notranslate"><span class="pre">nvFusion0</span></code>, <code class="docutils literal notranslate"><span class="pre">nvFusion1</span></code>, …). Under each fusion (in comments) are the “primitive” operations that describe precisely what each group does, although how each fusion is executed is entirely up to nvFuser.</p>
+</section>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../notebooks/functional_jit.html" class="btn btn-neutral float-right" title="Thunder functional jit" accesskey="n" rel="next">Next <img src="../_static/images/chevron-right-orange.svg" class="next-page"></a>
+      
+      
+        <a href="sharp_edges.html" class="btn btn-neutral" title="The sharp edges" accesskey="p" rel="prev"><img src="../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+      
+    </div>
+  
+
+  
+
+    <hr>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2024 Lightning-AI et al.
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+     
+
+</footer>
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">Train a MLP on MNIST</a></li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+         <script src="../_static/jquery.js"></script>
+         <script src="../_static/underscore.js"></script>
+         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+         <script src="../_static/doctools.js"></script>
+         <script src="../_static/sphinx_highlight.js"></script>
+         <script src="../_static/clipboard.min.js"></script>
+         <script src="../_static/copybutton.js"></script>
+         <script src="../_static/copybutton.js"></script>
+         <script>let toggleHintShow = 'Click to show';</script>
+         <script>let toggleHintHide = 'Click to hide';</script>
+         <script>let toggleOpenOnPrint = 'true';</script>
+         <script src="../_static/togglebutton.js"></script>
+         <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+     
+
+  
+
+  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <!-- <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources"> -->
+    <!-- <div class="container"> -->
+      <!-- <div class="row"> -->
+        <!--
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for PyTorch</p>
+          <a class="with-right-arrow" href="https://lightning-thunder.rtfd.io/en/latest">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="https://lightning-thunder.readthedocs.io/en/latest/#tutorials">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="https://lightning-thunder.readthedocs.io/en/latest/#community-examples">View Resources</a>
+        </div>
+        -->
+      <!-- </div> -->
+    <!-- </div> -->
+  <!-- </div> -->
+
+  <!--
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper">
+        <a href="https://lightning-thunder.rtfd.io/en/latest/" class="footer-logo"></a>
+      </div>
+
+      <div class="footer-links-wrapper">
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://lightning-thunder.rtfd.io/en/latest/">PyTorch</a></li>
+            <li><a href="https://lightning-thunder.readthedocs.io/en/latest/introduction_guide.html">Get Started</a></li>
+            <li><a href="https://lightning-thunder.rtfd.io/en/latest/">Features</a></li>
+            <li><a href="">Ecosystem</a></li>
+            <li><a href="https://www.Lightning-AI.ai/blog">Blog</a></li>
+            <li><a href="https://github.com/Lightning-AI/lightning-thunder/blob/master/CONTRIBUTING.md">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <ul>
+            <li class="list-title"><a href="https://lightning-thunder.readthedocs.io/en/latest/#community-examples">Resources</a></li>
+            <li><a href="https://lightning-thunder.readthedocs.io/en/latest/#tutorials">Tutorials</a></li>
+            <li><a href="https://lightning-thunder.rtfd.io/en/latest">Docs</a></li>
+            <li><a href="https://pytorch-lightning.slack.com" target="_blank">Discuss</a></li>
+            <li><a href="https://github.com/Lightning-AI/lightning-thunder/issues" target="_blank">Github Issues</a></li>
+            <li><a href="" target="_blank">Brand Guidelines</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col follow-us-col">
+          <ul>
+            <li class="list-title">Stay Connected</li>
+            <li>
+              <div id="mc_embed_signup">
+                <form
+                  action="https://twitter.us14.list-manage.com/subscribe/post?u=75419c71fe0a935e53dfa4a3f&id=91d0dccd39"
+                  method="post"
+                  id="mc-embedded-subscribe-form"
+                  name="mc-embedded-subscribe-form"
+                  class="email-subscribe-form validate"
+                  target="_blank"
+                  novalidate>
+                  <div id="mc_embed_signup_scroll" class="email-subscribe-form-fields-wrapper">
+                    <div class="mc-field-group">
+                      <label for="mce-EMAIL" style="display:none;">Email Address</label>
+                      <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email Address">
+                    </div>
+
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_75419c71fe0a935e53dfa4a3f_91d0dccd39" tabindex="-1" value=""></div>
+
+                    <div class="clear">
+                      <input type="submit" value="" name="subscribe" id="mc-embedded-subscribe" class="button email-subscribe-button">
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </li>
+          </ul>
+
+          <div class="footer-social-icons">
+            <a href="" target="_blank" class="facebook"></a>
+            <a href="https://twitter.com/LightningAI" target="_blank" class="twitter"></a>
+            <a href="" target="_blank" class="youtube"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  -->
+
+  <div class="cookie-banner-wrapper">
+  <div class="container">
+    <p class="gdpr-notice">To analyze traffic and optimize your experience, we serve cookies on this site. By clicking or navigating, you agree to allow our usage of cookies. Read PyTorch Lightning's <a href="https://pytorchlightning.ai/privacy-policy">Privacy Policy</a>.</p>
+    <img class="close-button" src="../_static/images/pytorch-x.svg">
+  </div>
+</div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="https://lightning-thunder.rtfd.io/en/latest/" aria-label="PyTorch Lightning"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://lightning-thunder.readthedocs.io/en/latest/introduction_guide.html">Get Started</a>
+          </li>
+
+          <li>
+            <a href="https://www.Lightning-AI.ai/blog">Blog</a>
+          </li>
+
+          <li class="resources-mobile-menu-title">
+            Ecosystem
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://lightning.ai/docs/pytorch/stable/">PyTorch Lightning</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/fabric/stable/">Lightning Fabric</a>
+            </li>
+
+            <li>
+              <a href="https://torchmetrics.readthedocs.io/en/stable/">TorchMetrics</a>
+            </li>
+
+            <li>
+              <a href="https://lightning.ai/docs/fabric/stable/">Fabric</a>
+            </li>
+          </ul>
+
+          <!--<li class="resources-mobile-menu-title">
+            Resources
+          </li>
+
+          <ul class="resources-mobile-menu-items">
+            <li>
+              <a href="https://lightning-thunder.readthedocs.io/en/latest/#community-examples">Developer Resources</a>
+            </li>
+
+            <li>
+              <a href="https://lightning-thunder.rtfd.io/en/latest/">About</a>
+            </li>
+
+            <li>
+              <a href="">Models (Beta)</a>
+            </li>
+
+            <li>
+              <a href="">Community</a>
+            </li>
+
+            <li>
+              <a href="">Forums</a>
+            </li>
+          </ul>-->
+
+          <li>
+            <a href="https://github.com/Lightning-AI/lightning-thunder">Github</a>
+          </li>
+
+          <li>
+            <a href="https://www.lightning.ai/">Lightning.ai</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQBQ3CV"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+ </body>
+</html>

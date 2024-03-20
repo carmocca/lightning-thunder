@@ -1,0 +1,6 @@
+﻿thunder.clang.isfinite
+======================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: isfinite

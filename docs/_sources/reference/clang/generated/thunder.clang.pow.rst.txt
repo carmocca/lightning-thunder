@@ -1,0 +1,6 @@
+﻿thunder.clang.pow
+=================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: pow

@@ -1,0 +1,6 @@
+﻿thunder.clang.stride\_order
+===========================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: stride_order

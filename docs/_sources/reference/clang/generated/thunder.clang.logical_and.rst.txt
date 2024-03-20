@@ -1,0 +1,6 @@
+﻿thunder.clang.logical\_and
+==========================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: logical_and

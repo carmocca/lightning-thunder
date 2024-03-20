@@ -1,0 +1,6 @@
+﻿thunder.cache\_option
+=====================
+
+.. currentmodule:: thunder
+
+.. autofunction:: cache_option

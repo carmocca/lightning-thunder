@@ -1,0 +1,6 @@
+﻿thunder.clang.diagonal
+======================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: diagonal

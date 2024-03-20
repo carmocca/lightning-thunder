@@ -1,0 +1,6 @@
+﻿thunder.clang.fmod
+==================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: fmod

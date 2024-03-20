@@ -1,0 +1,6 @@
+﻿thunder.clang.arange
+====================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: arange

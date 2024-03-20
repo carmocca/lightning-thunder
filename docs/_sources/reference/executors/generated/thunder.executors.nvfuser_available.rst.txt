@@ -1,0 +1,6 @@
+﻿thunder.executors.nvfuser\_available
+====================================
+
+.. currentmodule:: thunder.executors
+
+.. autofunction:: nvfuser_available

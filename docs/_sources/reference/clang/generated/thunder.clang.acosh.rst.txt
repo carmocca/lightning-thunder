@@ -1,0 +1,6 @@
+﻿thunder.clang.acosh
+===================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: acosh

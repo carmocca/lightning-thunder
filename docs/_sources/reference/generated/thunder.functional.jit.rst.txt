@@ -1,0 +1,6 @@
+﻿thunder.functional.jit
+======================
+
+.. currentmodule:: thunder.functional
+
+.. autofunction:: jit

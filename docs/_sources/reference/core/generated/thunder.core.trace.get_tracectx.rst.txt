@@ -1,0 +1,6 @@
+﻿thunder.core.trace.get\_tracectx
+================================
+
+.. currentmodule:: thunder.core.trace
+
+.. autofunction:: get_tracectx

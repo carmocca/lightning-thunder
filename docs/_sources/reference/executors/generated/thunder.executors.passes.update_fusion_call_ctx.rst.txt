@@ -1,0 +1,6 @@
+﻿thunder.executors.passes.update\_fusion\_call\_ctx
+==================================================
+
+.. currentmodule:: thunder.executors.passes
+
+.. autofunction:: update_fusion_call_ctx

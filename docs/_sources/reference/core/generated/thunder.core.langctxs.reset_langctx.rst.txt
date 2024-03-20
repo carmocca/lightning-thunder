@@ -1,0 +1,6 @@
+﻿thunder.core.langctxs.reset\_langctx
+====================================
+
+.. currentmodule:: thunder.core.langctxs
+
+.. autofunction:: reset_langctx

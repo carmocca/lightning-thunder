@@ -1,0 +1,29 @@
+﻿thunder.core.baseutils.ProxyInterface
+=====================================
+
+.. currentmodule:: thunder.core.baseutils
+
+.. autoclass:: ProxyInterface
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ProxyInterface.__init__
+      ~ProxyInterface.type_string
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ProxyInterface.name
+   
+   

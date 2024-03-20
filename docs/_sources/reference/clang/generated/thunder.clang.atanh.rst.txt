@@ -1,0 +1,6 @@
+﻿thunder.clang.atanh
+===================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: atanh

@@ -1,0 +1,6 @@
+﻿thunder.clang.device\_put
+=========================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: device_put

@@ -1,0 +1,6 @@
+﻿thunder.distributed.get\_skip\_data\_parallel\_grad\_sync
+=========================================================
+
+.. currentmodule:: thunder.distributed
+
+.. autofunction:: get_skip_data_parallel_grad_sync

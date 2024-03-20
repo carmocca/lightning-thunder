@@ -1,0 +1,6 @@
+﻿thunder.core.langctxs.get\_langctx
+==================================
+
+.. currentmodule:: thunder.core.langctxs
+
+.. autofunction:: get_langctx

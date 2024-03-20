@@ -1,0 +1,6 @@
+﻿thunder.last\_interpreted\_instructions
+=======================================
+
+.. currentmodule:: thunder
+
+.. autofunction:: last_interpreted_instructions

@@ -1,0 +1,6 @@
+﻿thunder.clang.eq
+================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: eq

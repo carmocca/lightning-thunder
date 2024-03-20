@@ -1,0 +1,30 @@
+﻿thunder.core.baseutils.SymbolInterface
+======================================
+
+.. currentmodule:: thunder.core.baseutils
+
+.. autoclass:: SymbolInterface
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SymbolInterface.__init__
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~SymbolInterface.name
+      ~SymbolInterface.is_prim
+      ~SymbolInterface.id
+   
+   

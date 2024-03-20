@@ -1,0 +1,6 @@
+﻿thunder.clang.matrix\_transpose
+===============================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: matrix_transpose

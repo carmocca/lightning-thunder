@@ -1,0 +1,6 @@
+﻿thunder.clang.sub
+=================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: sub

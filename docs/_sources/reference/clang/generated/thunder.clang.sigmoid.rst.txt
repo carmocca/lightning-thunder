@@ -1,0 +1,6 @@
+﻿thunder.clang.sigmoid
+=====================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: sigmoid

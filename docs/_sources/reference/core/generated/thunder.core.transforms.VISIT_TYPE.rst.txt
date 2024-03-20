@@ -1,0 +1,25 @@
+﻿thunder.core.transforms.VISIT\_TYPE
+===================================
+
+.. currentmodule:: thunder.core.transforms
+
+.. autoclass:: VISIT_TYPE
+
+   
+   .. automethod:: __init__
+
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~VISIT_TYPE.INSERT_AFTER
+      ~VISIT_TYPE.INSERT_BEFORE
+      ~VISIT_TYPE.REPLACE
+      ~VISIT_TYPE.NO_OP
+   
+   

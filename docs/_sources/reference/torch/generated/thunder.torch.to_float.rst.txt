@@ -1,0 +1,6 @@
+﻿thunder.torch.to\_float
+=======================
+
+.. currentmodule:: thunder.torch
+
+.. autofunction:: to_float

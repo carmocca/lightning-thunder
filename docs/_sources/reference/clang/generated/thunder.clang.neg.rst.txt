@@ -1,0 +1,6 @@
+﻿thunder.clang.neg
+=================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: neg

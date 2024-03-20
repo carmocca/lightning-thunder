@@ -1,0 +1,6 @@
+﻿thunder.core.rematerialization.rematerialize
+============================================
+
+.. currentmodule:: thunder.core.rematerialization
+
+.. autofunction:: rematerialize

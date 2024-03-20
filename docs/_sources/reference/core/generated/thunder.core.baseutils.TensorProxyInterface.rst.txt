@@ -1,0 +1,22 @@
+﻿thunder.core.baseutils.TensorProxyInterface
+===========================================
+
+.. currentmodule:: thunder.core.baseutils
+
+.. autoclass:: TensorProxyInterface
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TensorProxyInterface.__init__
+   
+   
+
+   
+   
+   

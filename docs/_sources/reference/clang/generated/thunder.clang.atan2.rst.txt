@@ -1,0 +1,6 @@
+﻿thunder.clang.atan2
+===================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: atan2

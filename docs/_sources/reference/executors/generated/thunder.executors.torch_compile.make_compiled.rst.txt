@@ -1,0 +1,6 @@
+﻿thunder.executors.torch\_compile.make\_compiled
+===============================================
+
+.. currentmodule:: thunder.executors.torch_compile
+
+.. autofunction:: make_compiled

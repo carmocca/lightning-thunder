@@ -1,0 +1,6 @@
+﻿thunder.clang.exp2
+==================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: exp2

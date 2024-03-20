@@ -1,0 +1,6 @@
+﻿thunder.examine.examine
+=======================
+
+.. currentmodule:: thunder.examine
+
+.. autofunction:: examine

@@ -1,0 +1,6 @@
+﻿thunder.clang.ge
+================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: ge

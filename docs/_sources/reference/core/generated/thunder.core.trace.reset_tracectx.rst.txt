@@ -1,0 +1,6 @@
+﻿thunder.core.trace.reset\_tracectx
+==================================
+
+.. currentmodule:: thunder.core.trace
+
+.. autofunction:: reset_tracectx

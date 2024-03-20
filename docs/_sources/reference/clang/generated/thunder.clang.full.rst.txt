@@ -1,0 +1,6 @@
+﻿thunder.clang.full
+==================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: full

@@ -1,0 +1,6 @@
+﻿thunder.core.trace.from\_trace
+==============================
+
+.. currentmodule:: thunder.core.trace
+
+.. autofunction:: from_trace

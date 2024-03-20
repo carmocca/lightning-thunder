@@ -1,0 +1,6 @@
+﻿thunder.clang.sqrt
+==================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: sqrt

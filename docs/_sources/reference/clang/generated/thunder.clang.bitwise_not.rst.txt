@@ -1,0 +1,6 @@
+﻿thunder.clang.bitwise\_not
+==========================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: bitwise_not

@@ -1,0 +1,39 @@
+﻿thunder.core.symbol.Symbol
+==========================
+
+.. currentmodule:: thunder.core.symbol
+
+.. autoclass:: Symbol
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Symbol.__init__
+      ~Symbol.bind
+      ~Symbol.normalize
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Symbol.name
+      ~Symbol.meta
+      ~Symbol.id
+      ~Symbol.is_prim
+      ~Symbol.tags
+      ~Symbol.is_fusion
+      ~Symbol.python_printer
+      ~Symbol.executor
+      ~Symbol.python_impl
+      ~Symbol.module
+   
+   

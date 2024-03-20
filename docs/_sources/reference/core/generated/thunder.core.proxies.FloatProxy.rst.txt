@@ -1,0 +1,38 @@
+﻿thunder.core.proxies.FloatProxy
+===============================
+
+.. currentmodule:: thunder.core.proxies
+
+.. autoclass:: FloatProxy
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FloatProxy.__init__
+      ~FloatProxy.as_integer_ratio
+      ~FloatProxy.conjugate
+      ~FloatProxy.fromhex
+      ~FloatProxy.hex
+      ~FloatProxy.is_integer
+      ~FloatProxy.known_value
+      ~FloatProxy.replace_name
+      ~FloatProxy.type_string
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~FloatProxy.imag
+      ~FloatProxy.name
+      ~FloatProxy.real
+   
+   

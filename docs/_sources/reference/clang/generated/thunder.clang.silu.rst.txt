@@ -1,0 +1,6 @@
+﻿thunder.clang.silu
+==================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: silu

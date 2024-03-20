@@ -1,0 +1,39 @@
+﻿thunder.core.proxies.FutureTensorProxy
+======================================
+
+.. currentmodule:: thunder.core.proxies
+
+.. autoclass:: FutureTensorProxy
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FutureTensorProxy.__init__
+      ~FutureTensorProxy.replace_name
+      ~FutureTensorProxy.type_string
+      ~FutureTensorProxy.wait
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~FutureTensorProxy.device
+      ~FutureTensorProxy.dtype
+      ~FutureTensorProxy.name
+      ~FutureTensorProxy.ndim
+      ~FutureTensorProxy.numel
+      ~FutureTensorProxy.requires_grad
+      ~FutureTensorProxy.shape
+      ~FutureTensorProxy.size
+      ~FutureTensorProxy.true_dtype
+   
+   

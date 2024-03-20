@@ -1,0 +1,6 @@
+﻿thunder.core.proxies.unvariableify
+==================================
+
+.. currentmodule:: thunder.core.proxies
+
+.. autofunction:: unvariableify

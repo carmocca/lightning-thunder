@@ -1,0 +1,32 @@
+﻿thunder.core.baseutils.BoundSymbolInterface
+===========================================
+
+.. currentmodule:: thunder.core.baseutils
+
+.. autoclass:: BoundSymbolInterface
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BoundSymbolInterface.__init__
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BoundSymbolInterface.sym
+      ~BoundSymbolInterface.args
+      ~BoundSymbolInterface.kwargs
+      ~BoundSymbolInterface.output
+      ~BoundSymbolInterface.subsymbols
+   
+   

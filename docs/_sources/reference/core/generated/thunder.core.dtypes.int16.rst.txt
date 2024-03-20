@@ -1,0 +1,6 @@
+﻿thunder.core.dtypes.int16
+=========================
+
+.. currentmodule:: thunder.core.dtypes
+
+.. autodata:: int16

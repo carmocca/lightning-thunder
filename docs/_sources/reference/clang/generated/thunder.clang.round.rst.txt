@@ -1,0 +1,6 @@
+﻿thunder.clang.round
+===================
+
+.. currentmodule:: thunder.clang
+
+.. autofunction:: round

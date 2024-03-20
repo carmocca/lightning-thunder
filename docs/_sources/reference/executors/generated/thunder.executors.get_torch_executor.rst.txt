@@ -1,0 +1,6 @@
+﻿thunder.executors.get\_torch\_executor
+======================================
+
+.. currentmodule:: thunder.executors
+
+.. autofunction:: get_torch_executor

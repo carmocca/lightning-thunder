@@ -1,0 +1,41 @@
+﻿thunder.executors.torch\_compile.TorchCompileExecutor
+=====================================================
+
+.. currentmodule:: thunder.executors.torch_compile
+
+.. autoclass:: TorchCompileExecutor
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TorchCompileExecutor.__init__
+      ~TorchCompileExecutor.can_execute
+      ~TorchCompileExecutor.can_execute_or_fuse
+      ~TorchCompileExecutor.can_fuse
+      ~TorchCompileExecutor.fuse
+      ~TorchCompileExecutor.fusion_pass
+      ~TorchCompileExecutor.get_execution_transform
+      ~TorchCompileExecutor.get_fuel
+      ~TorchCompileExecutor.get_grad_transform
+      ~TorchCompileExecutor.register_supported
+      ~TorchCompileExecutor.register_temporary_operation
+      ~TorchCompileExecutor.set_fuel
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TorchCompileExecutor.implmap
+      ~TorchCompileExecutor.name
+      ~TorchCompileExecutor.version
+   
+   
